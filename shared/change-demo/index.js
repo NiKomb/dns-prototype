@@ -2,7 +2,7 @@ import {gravityMarkup} from '../journal/icons/gravity.js';
 import {changeTargets} from './targets.js';
 import {targetOutline, unionMask} from './mask.js';
 import {annotationCandidates} from './placement.js';
-import {beforeComponents} from './before.js';
+import {beforeComponents} from './baseline-controls.js';
 import {changeDemoIntro} from './intro.js';
 import {journalText as bindPrepositions} from '../journal/text.js';
 import '../catalog/action-button.js';
