@@ -121,7 +121,7 @@ function collectionToggle(sample=false){
  });
  b.className='switch';b.dataset.journalControl='toggle';b.setAttribute('role','switch');
  b.setAttribute('aria-label',sample?'Образец переключателя сбора':source.live?'Управление сбором событий':'Демонстрация переключателя сбора');
- b.setAttribute('aria-checked',String(sample||state.collection));updateExplanation();
+ b.setAttribute('aria-checked',String(sample||state.collection));b.disabled=!sample&&!!source.readOnly;updateExplanation();
  infoTooltip('Сбор данных',explanation,{trigger:b});return b;
 }
 

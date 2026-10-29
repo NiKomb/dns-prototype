@@ -1,4 +1,5 @@
-import {apiFetch as fetch} from '../shared/telemetry/hosting.js';
+import {createJournalSource} from '../shared/journal/snapshot-source.js';
+const journalSource=createJournalSource(),fetch=(...args)=>journalSource.fetch(...args);
 import {comparisonActionNames as comparisonActions,comparisonPlacementNames as comparisonPlaces} from '../shared/journal/comparison-labels.js';
 import {mountJournal,loading} from '../shared/journal/views.js';
 import {journalModel,detailModel} from '../shared/journal/real-model.js';
@@ -9,6 +10,7 @@ const $=s=>document.querySelector(s),root=document.body;
 root.classList.add('approved-journal');
 initializeJournalTheme(root,null,'dns-report-theme');
 $('#page-title').after(systemStatus($('#status')));
+function status(text=''){const node=$('#status');node.dataset.busy=String(!!text);node.replaceChildren(document.createTextNode([journalSource.message,text].filter(Boolean).join(' ')));}
 const url=new URL(location.href),sections=['overview','hypotheses','scenarios','sessions'];
 const state={section:url.searchParams.has('run')?'sessions':sections.includes(url.hash.slice(1))?url.hash.slice(1):'overview',task:url.searchParams.get('task')||'',purpose:['qa','all'].includes(url.searchParams.get('purpose'))?url.searchParams.get('purpose'):'respondent'};
 let aggregate,data,runs=[],control,current,ui,version=0,factsVersion=0,model;
@@ -59,7 +61,7 @@ async function readFacts(value,compact=false,active){
 const factRequests=new WeakMap();
 async function completeFacts(reload=true){
  const snapshot=data,ticket=version;if(!snapshot.facts_generation)return true;
- $('#status').textContent='Загрузка подробных данных…';
+ status('Загрузка подробных данных…');
  // A snapshot's fact pages can serve successive section choices. Only returning
  // to overview or replacing the snapshot cancels their shared request.
  let entry=factRequests.get(snapshot);
@@ -76,8 +78,8 @@ async function completeFacts(reload=true){
  }
  if(ticket!==version||data!==snapshot)return false;
  data=full;aggregate=full;
- if(full.cache?.stale)$('#status').textContent='Показан последний готовый расчёт. Нажмите «Обновить», чтобы продолжить подготовку новых данных.';
- else $('#status').replaceChildren();return true;
+ if(full.cache?.stale)status('Показан последний готовый расчёт. Нажмите «Обновить», чтобы продолжить подготовку новых данных.');
+ else status();return true;
 }
 async function get(path,{compact=false,active}={}){
  const epoch=version,isCurrent=active||(()=>epoch===version);let busyRetries=0,changedCalculations=0;
@@ -89,7 +91,7 @@ async function get(path,{compact=false,active}={}){
   let r=await fetch(requestPath,{cache:'no-store'});
   if(!isCurrent())throw Error('Загрузка отменена');
   if(r.status===202){
-   const progress=await r.json();$('#status').textContent='Готовим результаты';
+   const progress=await r.json();status('Готовим результаты');
    if(progress.calculation){
     if(await prepareInBrowser(progress.calculation,epoch)!==false||++changedCalculations<3)continue;
     r=await fetch(path+(path.includes('?')?'&':'?')+'fallback=1',{cache:'no-store'});
@@ -97,7 +99,7 @@ async function get(path,{compact=false,active}={}){
    }else{if(progress.retry_after_ms&&++busyRetries>15)throw Error('Подготовка занята. Повторите обновление позже.');await new Promise(resolve=>setTimeout(resolve,progress.retry_after_ms||0));continue;}
   }
   if(!r.ok){const error=Error('Не удалось получить данные ('+r.status+')');error.status=r.status;throw error;}
-  if(r.headers.get('X-Journal-Cache')==='stale')$('#status').textContent='Показан последний готовый расчёт. Нажмите «Обновить», чтобы продолжить подготовку новых данных.';
+  if(r.headers.get('X-Journal-Cache')==='stale')status('Показан последний готовый расчёт. Нажмите «Обновить», чтобы продолжить подготовку новых данных.');
   const value=await r.json();
   if(!isCurrent())throw Error('Загрузка отменена');
   if(value.facts_generation)return readFacts(value,compact,isCurrent);
@@ -107,8 +109,8 @@ async function get(path,{compact=false,active}={}){
 }
 async function post(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw Error(r.status===409?'Режим изменён в другой вкладке. Обновите данные.':'Не удалось сохранить ('+r.status+')');return r.json();}
 function retryAction(error,retry){return error.journalModuleFailure?()=>location.reload():retry;}
-function showError(error,retry){const status=$('#status');status.setAttribute('role','alert');status.replaceChildren(document.createTextNode(error.message+' '),button('Повторить',retryAction(error,retry)));}
-async function safe(fn){$('#status').setAttribute('role','status');$('#status').replaceChildren();try{await fn();}catch(e){if(!ui){$('#screen').replaceChildren(empty('Не удалось загрузить данные','Попробуйте ещё раз.',button('Повторить загрузку',retryAction(e,()=>safe(fn)),'primary'),'error'));}showError(e,()=>safe(fn));}}
+function showError(error,retry){status(error.message);const message=$('#status');message.setAttribute('role','alert');message.append(' ',button('Повторить',retryAction(error,retry)));}
+async function safe(fn){$('#status').setAttribute('role','status');status();try{await fn();}catch(e){if(!ui){$('#screen').replaceChildren(empty('Не удалось загрузить данные','Попробуйте ещё раз.',button('Повторить загрузку',retryAction(e,()=>safe(fn)),'primary'),'error'));}showError(e,()=>safe(fn));}}
 
 function setURL(run,push=false){const u=new URL(location.href);u.hash=state.section;u.searchParams.set('task',state.task);if(run)u.searchParams.set('run',run);else u.searchParams.delete('run');if(state.purpose!=='respondent')u.searchParams.set('purpose',state.purpose);else u.searchParams.delete('purpose');history[push?'pushState':'replaceState'](null,'',u);}
 async function record(id){
@@ -121,20 +123,20 @@ function rebuild(){model=journalModel(data,runs,control,typeof catalogArticles==
 
 function render(){root.classList.remove('journal-starting');rebuild();source.route=current?'sessions/'+current.session.id:state.section;if(!ui)ui=mountJournal(root,source);ui.update(model,state.section,current?.session.id);}
 async function load(){
- const ticket=++version;++factsVersion;$('#status').replaceChildren();if(!ui)$('#screen').replaceChildren(loading('Обновление данных…',state.section));
+ const ticket=++version;++factsVersion;status();if(!ui)$('#screen').replaceChildren(loading('Обновление данных…',state.section));
  const requested=state.task==='all'&&state.section!=='sessions'?(aggregate?.current_task||''):state.task,suffix=requested?'?task='+encodeURIComponent(requested):'';
  let d,r,c;try{d=await get('/api/results/summary'+suffix,{compact:state.section==='overview'});if(ticket!==version)return false;[r,c]=await Promise.all([get('/api/results'+suffix+(d.cache?.stale?(suffix?'&':'?')+'fallback=1':'')),get('/api/collection')]);}catch(error){if(ticket!==version)return false;throw error;}if(ticket!==version)return false;
- const task=d.task||'all';if(task!==state.task)clearDetails();state.task=task;aggregate=d;data=d;runs=r;control=c;if($('#status').textContent==='Готовим результаты')$('#status').replaceChildren();render();return true;
+ const task=d.task||'all';if(task!==state.task)clearDetails();state.task=task;aggregate=d;data=d;runs=r;control=c;status(d.cache?.stale?'Показан последний готовый расчёт. Нажмите «Обновить», чтобы продолжить подготовку новых данных.':'');render();return true;
 }
 async function detail(id,{push=true}={}){
- let ticket=++version;$('#status').setAttribute('role','status');$('#status').textContent='Загрузка истории…';
+ let ticket=++version;$('#status').setAttribute('role','status');status('Загрузка истории…');
  try{const d=await record(id);if(ticket!==version)return;
   if(state.task!=='all'&&d.session.task_version!==state.task){clearDetails();current=null;state.task=d.session.task_version;if(!await load())return;ticket=version;}
-  current=d;state.section='sessions';$('#status').replaceChildren();setURL(id,push);render();window.scrollTo(0,0);$('#page-title').tabIndex=-1;$('#page-title').focus({preventScroll:true});
+  current=d;state.section='sessions';status();setURL(id,push);render();window.scrollTo(0,0);$('#page-title').tabIndex=-1;$('#page-title').focus({preventScroll:true});
  }catch(e){if(ticket===version)showError(e,()=>detail(id,{push}));}
 }
 
-const source={live:true,async copyLink(address){const input=el('input');input.readOnly=true;input.value=address;input.style.cssText='position:fixed;left:-9999px';root.append(input);input.focus();input.select();let ok=false;try{if(navigator.clipboard){await navigator.clipboard.writeText(input.value);ok=true;}}catch{}if(!ok){try{ok=document.execCommand('copy');}catch{}}input.remove();return ok?'Ссылка скопирована':'Скопируйте ссылку вручную: '+address;},purpose:state.purpose==='respondent'?'research':state.purpose,themeKey:'dns-report-theme',get initial(){return model;},navigate(section,id,filters){safe(async()=>{state.purpose=filters?.purpose==='research'?'respondent':filters?.purpose||state.purpose;++version;if(section==='overview')++factsVersion;if(id){if(!await completeFacts())return;return detail(id);}$('#status').replaceChildren();current=null;state.section=section;if(state.task==='all'&&section!=='sessions'){state.task=aggregate.current_task;if(!await load())return;}else if(section!=='overview'&&!await completeFacts())return;setURL(null,true);render();window.scrollTo(0,0);});},refresh(){return safe(async()=>{clearDetails();const previous=current,id=previous?.session.id;current=null;try{if(await load()&&id)await detail(id,{push:false});}catch(error){current=previous;throw error;}});},setCollection(enabled,toggle){return safe(async()=>{toggle.disabled=true;try{control=await post('/api/results/control',{enabled,revision:control.revision});render();}finally{toggle.disabled=false;}});},taskFilter(all=false){const items=aggregate.versions.map(v=>[v.task_version,'Подбор комплектующих'+(v.task_version===aggregate.current_task?'':' · архив '+v.task_version)]);if(!items.some(x=>x[0]===aggregate.current_task))items.unshift([aggregate.current_task,'Подбор комплектующих']);if(all)items.unshift(['all','Все сценарии']);const f=field('Сценарий',items,id=>safe(async()=>{clearDetails();current=null;state.task=id;setURL(null);await load();}));f.setValue(state.task);return f;},prepareExport(action,cancel){return safe(async()=>{try{const compact=!!data.facts_generation;if(!await completeFacts()){cancel?.();return;}if(compact)render();return action();}catch(error){cancel?.(error);throw error;}});},exportData(){return safe(async()=>{if(current){download('json');return;}if(!await completeFacts())return;const dataExport={summary:data,sessions:runs};save(JSON.stringify(dataExport,null,2),'journal.json','application/json');});},detailActions(){return [refreshButton(()=>source.refresh()),button('JSON',()=>download('json')),button('CSV',()=>download('csv'))];}};
+const source={live:true,get readOnly(){return journalSource.readOnly;},async copyLink(address){const input=el('input');input.readOnly=true;input.value=address;input.style.cssText='position:fixed;left:-9999px';root.append(input);input.focus();input.select();let ok=false;try{if(navigator.clipboard){await navigator.clipboard.writeText(input.value);ok=true;}}catch{}if(!ok){try{ok=document.execCommand('copy');}catch{}}input.remove();return ok?'Ссылка скопирована':'Скопируйте ссылку вручную: '+address;},purpose:state.purpose==='respondent'?'research':state.purpose,themeKey:'dns-report-theme',get initial(){return model;},navigate(section,id,filters){safe(async()=>{state.purpose=filters?.purpose==='research'?'respondent':filters?.purpose||state.purpose;++version;if(section==='overview')++factsVersion;if(id){if(!await completeFacts())return;return detail(id);}status();current=null;state.section=section;if(state.task==='all'&&section!=='sessions'){state.task=aggregate.current_task;if(!await load())return;}else if(section!=='overview'&&!await completeFacts())return;setURL(null,true);render();window.scrollTo(0,0);});},refresh(){return safe(async()=>{journalSource.reset();clearDetails();const previous=current,id=previous?.session.id;current=null;try{if(await load()&&id)await detail(id,{push:false});}catch(error){current=previous;throw error;}});},setCollection(enabled,toggle){if(journalSource.readOnly)return;return safe(async()=>{toggle.disabled=true;try{control=await post('/api/results/control',{enabled,revision:control.revision});render();}finally{toggle.disabled=false;}});},taskFilter(all=false){const items=aggregate.versions.map(v=>[v.task_version,'Подбор комплектующих'+(v.task_version===aggregate.current_task?'':' · архив '+v.task_version)]);if(!items.some(x=>x[0]===aggregate.current_task))items.unshift([aggregate.current_task,'Подбор комплектующих']);if(all)items.unshift(['all','Все сценарии']);const f=field('Сценарий',items,id=>safe(async()=>{clearDetails();current=null;state.task=id;setURL(null);await load();}));f.setValue(state.task);return f;},prepareExport(action,cancel){return safe(async()=>{try{const compact=!!data.facts_generation;if(!await completeFacts()){cancel?.();return;}if(compact)render();return action();}catch(error){cancel?.(error);throw error;}});},exportData(){return safe(async()=>{if(current){download('json');return;}if(!await completeFacts())return;const dataExport={summary:data,sessions:runs};save(JSON.stringify(dataExport,null,2),'journal.json','application/json');});},detailActions(){return [refreshButton(()=>source.refresh()),button('JSON',()=>download('json')),button('CSV',()=>download('csv'))];}};
 function save(text,filename,type){const u=URL.createObjectURL(new Blob([text],{type})),a=el('a');a.href=u;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
 
 // Existing recorded-event descriptions and export handler.

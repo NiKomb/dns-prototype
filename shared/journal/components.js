@@ -130,14 +130,14 @@ export function systemStatus(message){
   announce.setAttribute('role',error?'alert':'status');announce.setAttribute('aria-live',error?'assertive':'polite');
   if(announce.textContent!==text)announce.textContent=text;
   control.setAttribute('aria-label',text?'Состояние журнала: '+text:'Состояние журнала');control.removeAttribute('title');
-  control.setAttribute('aria-busy',String(!!text&&!error));
+  control.setAttribute('aria-busy',String(!!text&&!error&&message.dataset.busy!=='false'));
   if(!text)show(false);
  }
  root.addEventListener('pointerenter',()=>show(true));
  root.addEventListener('focusin',()=>show(true));
  root.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();control.focus();show(false);}});
  document.addEventListener('pointerdown',e=>{if(!root.contains(e.target))show(false);});
- new MutationObserver(sync).observe(message,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['role']});
+ new MutationObserver(sync).observe(message,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:['role','data-busy']});
  show(false);sync();return root;
 }
 export function materialTable(headers,rows){
