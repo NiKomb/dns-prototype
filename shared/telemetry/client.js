@@ -16,7 +16,8 @@ const request=(path,options)=>fetch(new URL(path,config?.apiOrigin||location.ori
 const isConfig=['/','/index.html','/new-attempt','/new-attempt/','/new-attempt/index.html'].includes(localPath);
 const isArticle=/^\/articles\/[a-z0-9-]+\.html$/.test(localPath);
 if(config?.version && (isConfig||isArticle) && !window.__studyInstalled) {
- window.__studyInstalled=true;
+ window.__studyInstalled=true;window.__studyReady=false;
+ let readyComplete=false;
  let receiverClock=createReceiverClock(config.clock,window.__studyClockStart);
  const now=()=>receiverClock?.now();
  const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(storageKey(key)))??fallback;}catch{return fallback;}};
@@ -206,10 +207,12 @@ if(config?.version && (isConfig||isArticle) && !window.__studyInstalled) {
   updateSaveButton(button,session?.completed_at);
  }
  function complete(){
+  if(!readyComplete){window.__studySaveRequested=true;return;}
+  window.__studySaveRequested=false;
   if(expireAttempt())return;
   const build=captureBuild();if(!build||!Object.values(build).some(Boolean))return;
-  write('dns-study-saved-build',{build,saved_at:now()});
   if(!collecting||!session||session.completed_at||!entered)return;
+  write('dns-study-saved-build',{build,saved_at:now()});
   for(const root of exposures.keys())endExposure(root,'complete');endHover('complete');finishScrolls();comparison.finish();articleTime(true);closeModal('selection');
   emit('session.complete',{build,reason:'save',...sample(pageClock)});
   session.completed_at=now();write('dns-study-session',session);entered=false;stopRecording();syncSaveButton();void flush();
@@ -421,9 +424,12 @@ if(config?.version && (isConfig||isArticle) && !window.__studyInstalled) {
   if(config.unavailable)showUnavailable();
   // Compatibility with HTML opened before the host gained receiver time.
   if(!receiverClock){try{const requested=performance.now(),response=await request('/api/study-config',{cache:'no-store'});if(response.ok){const fresh=await response.json();receiverClock=createReceiverClock(fresh.clock,(requested+performance.now())/2);}}catch{}}
-  expireAttempt();await syncCollection();syncSaveButton();syncOnlineListener();void flush();
+  expireAttempt();syncSaveButton();syncOnlineListener();void flush();
   if(isArticle&&window.__studyArticle)bootArticle(window.__studyArticle);
   if(isConfig){const nav=(performance.getEntriesByType('navigation')[0]?.type||({1:'reload',2:'back_forward'})[performance.navigation?.type]);pageEntry(nav==='back_forward'?'browser_history':nav==='reload'?'reload':'direct');showStart();}
+  readyComplete=true;window.__studyReady=true;
+  if(window.__studySaveRequested&&session&&!session.completed_at&&entered)complete();else window.__studySaveRequested=false;
+  void syncCollection();
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready,{once:true});else void ready();
 }

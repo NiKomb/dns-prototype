@@ -29,7 +29,7 @@ async function boot() {
     window.__studyClockStart = (requested+performance.now())/2;
     unavailable?.destroy(); unavailable = null;
     installed = true;
-    await import('./client.js');
+    await import('./client.js?v='+encodeURIComponent(config.version));
     window.removeEventListener('online',boot);
   } catch {
     if (!unavailable) {

@@ -43,6 +43,6 @@
   updateLinks(document);
   new MutationObserver(records => {for(const r of records)if(r.type==='attributes')updateLink(r.target);else r.addedNodes.forEach(updateLinks);})
     .observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['href']});
-  document.addEventListener('click',event=>{const link=event.target.closest?.('a[href]');if(link)updateLink(link);},true);
+  document.addEventListener('click',event=>{const link=event.target.closest?.('a[href]');if(link)updateLink(link);if(routeActive&&event.target.closest?.('#save-build'))window.__studySaveRequested=true;},true);
   if (routeActive) import('./telemetry/bootstrap.js');
 })();
