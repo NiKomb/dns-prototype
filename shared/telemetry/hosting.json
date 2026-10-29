@@ -1,0 +1,8 @@
+{
+  "siteOrigin": "https://nikomb.github.io",
+  "sitePath": "/dns-prototype/",
+  "repository": "NiKomb/dns-prototype",
+  "branch": "main",
+  "apiOrigin": "https://dns-prototype.joysmashed.workers.dev",
+  "storageNamespace": "dns-pages-study-v1"
+}

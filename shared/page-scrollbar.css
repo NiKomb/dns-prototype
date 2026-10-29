@@ -1,0 +1,4 @@
+@import url("./scrollbar.css");
+@import url("./color-tokens.css");
+/* Document scrollbar shared by the configurator, articles and component library. */
+html{scrollbar-width:thin;scrollbar-color:var(--controls-default-gray) transparent}

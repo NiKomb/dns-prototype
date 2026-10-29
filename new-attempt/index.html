@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <base href="/dns-prototype/">
+  <meta name="robots" content="noindex">
+  <script src="shared/prototype-preview.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Тестовый прототип — сборка ПК</title>
+  <link rel="icon" type="image/svg+xml" href="assets/shared/favicon.svg">
+  <script src="shared/scrollbar.js"></script>
+  <link rel="stylesheet" href="shared/page-scrollbar.css?v=20260928-all-pages">
+  <link rel="stylesheet" href="shared/catalog/styles.css?v=20260930-article-arrow-center">
+  <script src="shared/image-loading.js?v=20260929-images"></script>
+  <script defer src="shared/catalog/action-button.js"></script>
+  <script defer src="shared/catalog/catalog-shared.js?v=20261001-article-entry"></script>
+  <script defer src="pages/configurator/build-store.js?v=20260928-state"></script>
+  <script defer src="pages/configurator/catalog-loader.js?v=20260930-product-badges"></script>
+  <script defer src="shared/catalog/configurator-components.js?v=20260930-filter-groups-final"></script>
+  <script defer src="pages/configurator/build-view.js?v=20260929-lazy"></script>
+  <link rel="stylesheet" href="shared/catalog/build-recommendations.css">
+  <script defer src="shared/catalog/build-recommendations.js?v=20261001-article-entry"></script>
+  <script defer src="pages/configurator/build-recommendations.js"></script>
+  <script type="module" src="pages/configurator/article-navigation.js?v=20261001-all-articles"></script>
+  <script defer src="pages/configurator/scroll-reveal.js?v=20260928-1"></script>
+  <noscript><style>img[data-image-src]{display:none}</style></noscript>
+</head>
+<body class="configurator-page">
+  <div data-configurator-component="siteHeader"></div>
+
+  <main class="container">
+    <h1>Конфигуратор ПК</h1>
+    <div class="config-area">
+      <section class="parts-card" aria-label="Комплектующие">
+        <div data-configurator-component="buildProgress"></div>
+        <div data-configurator-category="processor-row"></div>
+        <div data-configurator-category="motherboard-row"></div>
+        <div data-configurator-category="power-supply-row"></div>
+        <div data-configurator-category="case-row"></div>
+        <div data-configurator-category="gpu-row"></div>
+        <div data-configurator-category="empty-5"></div>
+        <div data-configurator-category="empty-6"></div>
+        <div data-configurator-category="empty-7"></div>
+        <div data-configurator-category="empty-8"></div>
+        <div data-configurator-category="empty-9"></div>
+        <div data-configurator-category="empty-10"></div>
+        <div data-configurator-category="empty-11"></div>
+      </section>
+      <aside class="side-area"><div data-configurator-component="buildTips"></div><div data-configurator-component="buildSummary"></div><div data-configurator-component="buildWarning"></div><div id="build-articles-host"></div></aside>
+    </div>
+  </main>
+
+  <div data-configurator-component="siteFooter"></div>
+
+</body>
+</html>

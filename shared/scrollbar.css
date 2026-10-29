@@ -1,0 +1,7 @@
+.catalog-scrollbar{overflow:hidden;background:var(--background-neutral-light);border-radius:2px;touch-action:none;user-select:none}
+.catalog-scrollbar-thumb{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--space-gray-300);border-radius:2px}
+/* The document and journal use the same four-pixel rail as category modals. */
+.page-scroll-rail{position:fixed;z-index:45}
+.page-scroll-rail[hidden]{display:none}
+html.has-page-scrollbar,.has-scroll-rail{scrollbar-width:none!important;scrollbar-gutter:auto!important}
+html.has-page-scrollbar::-webkit-scrollbar,.has-scroll-rail::-webkit-scrollbar{display:none!important;width:0;height:0}

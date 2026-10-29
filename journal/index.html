@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <script src="../shared/prototype-preview.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <title>Журнал тестирования · DNS</title>
+  <link rel="icon" href="../assets/shared/favicon.svg" type="image/svg+xml">
+  <script src="../shared/journal/loading.js" data-journal-bootstrap></script>
+  <script src="../shared/scrollbar.js"></script>
+  <link rel="stylesheet" href="../shared/page-scrollbar.css">
+  <link rel="stylesheet" href="../shared/journal/components.css">
+  <link rel="stylesheet" href="../shared/journal/layout.css">
+  <script src="../pages/configurator/data/article-data.js"></script>
+  <script type="module" src="../telemetry/results.js"></script>
+</head>
+<body class="journal-ui approved-journal journal-starting">
+  <script>document.body.dataset.theme=document.documentElement.dataset.theme;</script>
+  <aside class="sidebar">
+    <nav id="navigation" aria-label="Разделы журнала"></nav>
+  </aside>
+  <main>
+    <header class="topbar"><div id="breadcrumb" hidden></div><div class="page-heading"><div><div class="page-title-row"><h1 id="page-title">Обзор</h1><div id="title-actions"></div></div><p id="page-description" class="muted" hidden></p></div><div id="page-actions" class="toolbar"><button class="button icon-button" id="theme-toggle" aria-label="Включить тёмную тему" type="button"></button></div></div></header>
+    <section class="page-content" aria-label="Экран журнала">
+    <p id="status" class="muted" role="status" aria-live="polite"></p><div id="screen"></div></section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="technical-dialog" class="technical-popup" aria-labelledby="technical-title"></dialog>
+  <dialog id="demo-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <script>window.journalLoading.bootstrap();</script>
+</body>
+</html>

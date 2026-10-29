@@ -1,0 +1,199 @@
+@import url("../color-tokens.css");
+
+/* Shared journal primitives. Scales contain literal colors, not aliases.
+   Theme-independent scales. All theme roles below reference these primitives. */
+.journal-ui, :root:has(>body.journal-ui) {
+  --journal-gray-0: oklch(100% 0 286);
+  --journal-gray-50: oklch(98% 0.002 286);
+  --journal-gray-100: oklch(96% 0.002 286);
+  --journal-gray-200: oklch(90% 0.002 286);
+  --journal-gray-300: oklch(80% 0.002 286);
+  --journal-gray-400: oklch(70% 0.002 286);
+  --journal-gray-500: oklch(60% 0.002 286);
+  --journal-gray-600: oklch(50% 0.002 286);
+  --journal-gray-700: oklch(40% 0.002 286);
+  --journal-gray-800: oklch(30% 0.002 286);
+  --journal-gray-900: oklch(20% 0.002 286);
+  --journal-gray-950: oklch(17% 0.002 286);
+  --journal-gray-1000: oklch(0% 0 286);
+
+  --journal-neutral-0: #ffffff;
+  --journal-neutral-50: #f7f8fa;
+  --journal-neutral-100: #eff1f5;
+  --journal-neutral-200: #dde1e8;
+  --journal-neutral-300: #b8bec9;
+  --journal-neutral-400: #949cab;
+  --journal-neutral-500: #737d8f;
+  --journal-neutral-600: #596273;
+  --journal-neutral-700: #444c59;
+  --journal-neutral-750: #3b4350;
+  --journal-neutral-800: #303641;
+  --journal-neutral-850: #252a33;
+  --journal-neutral-900: #20242c;
+  --journal-neutral-950: #191c22;
+
+  --journal-orange-50: #fff5e9;
+  --journal-orange-100: #ffe4c2;
+  --journal-orange-200: #ffc480;
+  --journal-orange-300: #ff9741;
+  --journal-orange-400: #fc8507;
+  --journal-orange-600: #df7400;
+  --journal-orange-800: #8f4500;
+
+  --journal-green-50: #ebffed;
+  --journal-green-100: #c9f4df;
+  --journal-green-200: #8be3ba;
+  --journal-green-300: #41d172;
+  --journal-green-400: #00be70;
+  --journal-green-600: #00884f;
+  --journal-green-800: #005d38;
+
+  --journal-yellow-50: #fff7da;
+  --journal-yellow-100: #ffedb0;
+  --journal-yellow-200: #ffdd7d;
+  --journal-yellow-300: #ffca48;
+  --journal-yellow-400: #d9a323;
+  --journal-yellow-600: #a7770d;
+  --journal-yellow-800: #785100;
+
+  --journal-red-50: #fff0ef;
+  --journal-red-100: #ffd8d4;
+  --journal-red-200: #ffb1aa;
+  --journal-red-300: #ff8178;
+  --journal-red-400: #ff544b;
+  --journal-red-600: #c73530;
+  --journal-red-800: #8f2423;
+
+  --journal-blue-50: #e9f6fc;
+  --journal-blue-100: #d1e9fc;
+  --journal-blue-200: #a2d1f8;
+  --journal-blue-300: #67b5f1;
+  --journal-blue-400: #007de3;
+  --journal-blue-600: #005da9;
+  --journal-blue-800: #00437c;
+
+  --journal-brand-start: #fc8507;
+  --journal-brand-end: #ffa218;
+}
+
+/* One role table for every journal consumer, including library specimens. */
+.journal-ui, :root:has(>body.journal-ui) {
+  --journal-page: var(--journal-gray-50);
+  --journal-sidebar: var(--journal-gray-100);
+  --journal-surface: var(--journal-gray-0);
+  --journal-tooltip-surface: var(--journal-surface);
+  --journal-surface-inset: var(--journal-gray-100);
+  --journal-measurement-surface: var(--journal-gray-50);
+  --journal-surface-hover: var(--journal-review-hover);
+  --journal-divider: var(--journal-gray-200);
+  --journal-control-border: var(--journal-divider);
+  --journal-filter-option-surface: var(--journal-gray-100);
+  --journal-table-row: var(--journal-page);
+  --journal-table-row-alt: var(--journal-surface);
+  --journal-table-heading: var(--journal-surface-inset);
+  --journal-table-hover: var(--journal-surface-hover);
+  --journal-tabs-track: var(--journal-surface-inset);
+  --journal-tabs-selected: var(--journal-gray-0);
+  --journal-skeleton: var(--journal-gray-100);
+  --journal-review-surface: var(--journal-page);
+  --journal-review-hover: var(--journal-page);
+  --journal-text-primary: var(--journal-gray-800);
+  --journal-text-secondary: var(--journal-gray-700);
+  --journal-icon-secondary: var(--journal-gray-500);
+  --journal-icon-supporting: var(--journal-icon-secondary);
+  --journal-icon-info: var(--journal-gray-400);
+  --journal-scroll-thumb: var(--journal-gray-500);
+  --journal-brand: var(--journal-orange-400);
+  --journal-accent: var(--journal-brand);
+  --journal-accent-text: var(--journal-accent);
+  --journal-accent-label: var(--journal-orange-800);
+  --journal-accent-surface: var(--journal-orange-50);
+  --journal-focus: var(--journal-brand);
+  --journal-link: var(--journal-blue-600);
+  --journal-session-name: var(--journal-blue-400);
+  --journal-time-value: var(--journal-blue-400);
+  --journal-card-value: var(--journal-brand);
+  --journal-session-link: var(--journal-accent-text);
+  --journal-action-primary: var(--journal-brand);
+  --journal-action-primary-hover: var(--journal-orange-300);
+  --journal-action-secondary-hover: var(--journal-surface-hover);
+  --journal-on-action: var(--journal-gray-0);
+  --journal-action-hover-overlay: var(--transparency-dark-dark-4);
+  --journal-action-accent-hover: color-mix(in srgb, var(--journal-brand) 20%, var(--journal-surface));
+  --journal-success-text: var(--journal-green-800);
+  --journal-success-surface: var(--journal-green-50);
+  --journal-warning-text: var(--journal-yellow-800);
+  --journal-warning-surface: var(--journal-yellow-50);
+  --journal-error-text: var(--journal-red-600);
+  --journal-error-surface: var(--journal-red-50);
+  --journal-success-fill: var(--journal-green-600);
+  --journal-on-success: var(--journal-gray-0);
+  --journal-error-fill: var(--journal-red-600);
+  --journal-on-error: var(--journal-gray-0);
+  --journal-warning-fill: var(--journal-yellow-600);
+  --journal-active-surface: var(--journal-yellow-100);
+  --journal-on-active: var(--journal-gray-900);
+  --journal-stopped-surface: var(--journal-surface-hover);
+  --journal-event-dot: var(--journal-accent-text);
+  --journal-progress: var(--journal-accent);
+  --journal-switch-thumb: var(--journal-gray-0);
+  --journal-shadow-switch: color-mix(in srgb, var(--journal-gray-1000) 13.333%, transparent);
+  --journal-shadow-segment: color-mix(in srgb, var(--journal-gray-1000) 6.667%, transparent);
+  --journal-shadow-dropdown: var(--journal-shadow-switch);
+  --journal-shadow-dialog: color-mix(in srgb, var(--journal-gray-1000) 6%, transparent);
+  --journal-shadow-tooltip: color-mix(in srgb, var(--journal-gray-1000) 20%, transparent);
+  --journal-shadow-shortcut-tooltip: color-mix(in srgb, var(--journal-shadow-tooltip) 50%, transparent);
+  --journal-shadow-status: var(--journal-shadow-switch);
+  --journal-shadow-card-hover: var(--effects-shadow-plate-floating-shadow);
+  --journal-dialog-backdrop: color-mix(in srgb, var(--journal-gray-800) 30%, transparent);
+  --journal-disabled-opacity: .45;
+}
+
+.journal-ui[data-theme=dark], :root[data-theme=dark]:has(>body.journal-ui) {
+  --journal-page: var(--journal-neutral-950);
+  --journal-sidebar: var(--journal-neutral-900);
+  --journal-surface: var(--journal-neutral-900);
+  --journal-tooltip-surface: var(--journal-neutral-850);
+  --journal-surface-inset: var(--journal-neutral-850);
+  --journal-measurement-surface: var(--journal-neutral-850);
+  --journal-filter-option-surface: var(--journal-neutral-900);
+  --journal-surface-hover: var(--journal-review-hover);
+  --journal-action-hover-overlay: color-mix(in srgb, var(--journal-gray-0) 4%, transparent);
+  --journal-action-secondary-hover: var(--journal-neutral-750);
+  --journal-divider: var(--journal-neutral-700);
+  --journal-table-row: var(--journal-surface-inset);
+  --journal-tabs-selected: var(--journal-neutral-800);
+  --journal-skeleton: var(--journal-neutral-750);
+  --journal-review-surface: var(--journal-surface-inset);
+  --journal-review-hover: var(--journal-neutral-800);
+  --journal-text-primary: var(--journal-neutral-100);
+  --journal-text-secondary: var(--journal-neutral-300);
+  --journal-icon-secondary: var(--journal-neutral-400);
+  --journal-icon-supporting: var(--journal-text-secondary);
+  --journal-icon-info: var(--journal-neutral-400);
+  --journal-scroll-thumb: var(--journal-neutral-500);
+  --journal-accent: var(--journal-orange-300);
+  --journal-accent-label: var(--journal-orange-200);
+  --journal-link: var(--journal-blue-300);
+  --journal-link-hover: var(--journal-blue-200);
+  --journal-session-name: var(--journal-blue-300);
+  --journal-session-name-hover: var(--journal-blue-200);
+  --journal-time-value: var(--journal-blue-100);
+  --journal-card-value: var(--journal-orange-300);
+  --journal-accent-surface: color-mix(in srgb, var(--journal-orange-400) 12%, var(--journal-surface));
+  --journal-success-surface: color-mix(in srgb, var(--journal-green-400) 12%, var(--journal-surface));
+  --journal-warning-surface: color-mix(in srgb, var(--journal-yellow-300) 12%, var(--journal-surface));
+  --journal-error-surface: color-mix(in srgb, var(--journal-red-400) 12%, var(--journal-surface));
+  --journal-success-text: var(--journal-green-200);
+  --journal-warning-text: var(--journal-yellow-200);
+  --journal-error-text: var(--journal-red-200);
+  --journal-success-fill: var(--journal-green-200);
+  --journal-on-success: var(--journal-neutral-950);
+  --journal-error-fill: var(--journal-red-200);
+  --journal-on-error: var(--journal-neutral-950);
+  --journal-warning-fill: var(--journal-yellow-200);
+  --journal-active-surface: var(--journal-warning-surface);
+  --journal-on-active: var(--journal-warning-text);
+  --journal-progress: var(--journal-orange-300);
+  --journal-dialog-backdrop: color-mix(in srgb, var(--journal-gray-1000) 50%, transparent);
+}

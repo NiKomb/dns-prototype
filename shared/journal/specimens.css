@@ -1,0 +1,33 @@
+/* Journal specimens only. */
+.journal-ui .system-panel{border-radius:var(--radius);background:var(--journal-surface);padding:22px 24px;margin-bottom:32px}
+.journal-ui .system-heading{display:flex;justify-content:space-between;gap:16px;align-items:start}
+.journal-ui .system-heading h2{ font: var(--type-h3); }
+.journal-ui .system-heading p{max-width:720px;margin-top:5px}
+.journal-ui .library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:20px}
+.journal-ui .library-item{padding-left:12px;min-width:0}
+.journal-ui .library-label{color:var(--journal-text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px; font: var(--type-body-small); }
+.journal-ui .library-extra{margin-top:20px}
+.journal-ui .library-extra>summary{color:var(--journal-text-secondary); font: var(--type-body-small); }
+.journal-ui .system-footnote{color:var(--journal-text-secondary);margin-top:18px; font: var(--type-body-small); }
+@media(max-width:1100px){.journal-ui .library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.journal-ui .system-panel{padding:20px}}
+@media(max-width:760px){.journal-ui .system-heading{flex-wrap:wrap}
+.journal-ui .library-grid{gap:16px}
+}
+.journal-ui .library-extra .table-scroll{max-width:100%}
+.journal-ui .library-wide{grid-column:span 2}
+@media(max-width:760px){.journal-ui .library-wide{grid-column:span 2}}
+.journal-ui .system-panel{background:var(--journal-surface)}
+.journal-ui .library-item{padding-left:0}
+.journal-ui .library-extra[open]>.disclosure-trigger>.journal-icon{transform:rotate(180deg)}
+.journal-ui .library-extra>.disclosure-trigger{padding:8px 0}
+
+/* Full journal examples and the lazy archive exist only in the component library. */
+.journal-ui .journal-screen-specimens{margin-top:var(--journal-space-24);display:flex;flex-direction:column;gap:var(--journal-space-24)}
+.journal-ui .journal-screen-example{min-width:0}
+.journal-ui .journal-screen-example>.library-label{margin-bottom:var(--journal-space-12)}
+.journal-ui [data-library-journal-legacy]{margin-top:var(--journal-space-24)}
+.journal-ui .journal-legacy-samples,.journal-ui .journal-legacy-samples>.approved-legacy{display:flex;flex-direction:column;gap:var(--journal-space-24);min-width:0}
+.journal-ui .journal-legacy-samples>.approved-legacy{margin:0}
+.journal-ui .journal-legacy-samples .approved-legacy-entry{min-width:0}
+.journal-ui .journal-legacy-samples .approved-legacy-entry>.library-label{margin-bottom:var(--journal-space-12)}

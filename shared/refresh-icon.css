@@ -1,0 +1,4 @@
+/* Shared refresh motion for journal actions and recording status. */
+.refresh-icon-spinning { animation:journal-refresh 1s linear infinite; }
+@keyframes journal-refresh { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .refresh-icon-spinning { animation:none; } }

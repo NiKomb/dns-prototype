@@ -1,0 +1,20 @@
+@import url("./color-tokens.css");
+/* Shared keyboard focus for the configurator, catalogs, articles and DS. */
+:root, :host {
+
+  --focus-width: 2px;
+  --focus-offset: 3px;
+}
+:focus-visible {
+  outline: var(--focus-width) solid var(--stroke-border-brand);
+  outline-offset: var(--focus-offset);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* Presentation mode keeps native keyboard focus without its visible ring. */
+html[data-change-demo]{--focus-width:0px}
+html[data-change-demo] :is(:focus,:has(> :focus-visible)){outline:none}
+
+/* Unavailable controls keep the same cursor over their labels and icons. */
+:is(button,input,select,textarea):disabled,[aria-disabled="true"] { cursor:not-allowed !important; }
+:is(:disabled,[aria-disabled="true"]) * { cursor:inherit !important; }

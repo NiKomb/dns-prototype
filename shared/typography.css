@@ -1,0 +1,56 @@
+/* One font and eight approved recipes for every live page and shared component. */
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-cyrillic-normal.woff2') format('woff2');font-display:swap;font-weight:400;unicode-range:U+0400-052F,U+2116}
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-cyrillic-bold.woff2') format('woff2');font-display:swap;font-weight:700;unicode-range:U+0400-052F,U+2116}
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-latin-normal.woff2') format('woff2');font-display:swap;font-weight:400;unicode-range:U+0000-024F}
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-latin-bold.woff2') format('woff2');font-display:swap;font-weight:700;unicode-range:U+0000-024F}
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-currency-normal.woff2') format('woff2');font-display:swap;font-weight:400;unicode-range:U+20BD}
+@font-face{font-family:'PT Sans';src:url('../assets/shared/pt-sans-currency-bold.woff2') format('woff2');font-display:swap;font-weight:700;unicode-range:U+20BD}
+:root {
+  --type-family: 'PT Sans', Arial, sans-serif;
+  --type-style: normal;
+  --type-h1-size: 32px;
+  --type-h1-line-height: 36px;
+  --type-h1-weight: 700;
+  --type-h1: var(--type-style) var(--type-h1-weight) var(--type-h1-size)/var(--type-h1-line-height) var(--type-family);
+  --type-h2-size: 20px;
+  --type-h2-line-height: 26px;
+  --type-h2-weight: 700;
+  --type-h2: var(--type-style) var(--type-h2-weight) var(--type-h2-size)/var(--type-h2-line-height) var(--type-family);
+  --type-h3-size: 18px;
+  --type-h3-line-height: 24px;
+  --type-h3-weight: 700;
+  --type-h3: var(--type-style) var(--type-h3-weight) var(--type-h3-size)/var(--type-h3-line-height) var(--type-family);
+  --type-body-strong-size: 16px;
+  --type-body-strong-line-height: 22px;
+  --type-body-strong-weight: 700;
+  --type-body-strong: var(--type-style) var(--type-body-strong-weight) var(--type-body-strong-size)/var(--type-body-strong-line-height) var(--type-family);
+  --type-body-size: 16px;
+  --type-body-line-height: 22px;
+  --type-body-weight: 400;
+  --type-body: var(--type-style) var(--type-body-weight) var(--type-body-size)/var(--type-body-line-height) var(--type-family);
+  --type-body-small-size: 14px;
+  --type-body-small-line-height: 20px;
+  --type-body-small-weight: 400;
+  --type-body-small: var(--type-style) var(--type-body-small-weight) var(--type-body-small-size)/var(--type-body-small-line-height) var(--type-family);
+  --type-body-small-strong-size: 14px;
+  --type-body-small-strong-line-height: 20px;
+  --type-body-small-strong-weight: 700;
+  --type-body-small-strong: var(--type-style) var(--type-body-small-strong-weight) var(--type-body-small-strong-size)/var(--type-body-small-strong-line-height) var(--type-family);
+  --type-caption-size: 12px;
+  --type-caption-line-height: 16px;
+  --type-caption-weight: 400;
+  --type-caption: var(--type-style) var(--type-caption-weight) var(--type-caption-size)/var(--type-caption-line-height) var(--type-family);
+}
+
+:where(body), :host { font: var(--type-body); font-synthesis: none; }
+:where(button, input, select, textarea) { font: inherit; }
+:where(h1), .type-h1 { font: var(--type-h1); }
+:where(h2), .type-h2 { font: var(--type-h2); }
+:where(h3), .type-h3 { font: var(--type-h3); }
+:where(h4, h5, h6, strong, b), .type-body-strong { font: var(--type-body-strong); }
+.type-body { font: var(--type-body); }
+.type-body-small { font: var(--type-body-small); }
+.type-body-small-strong { font: var(--type-body-small-strong); }
+:where(small), .type-caption { font: var(--type-caption); }
+:where(code, pre, kbd, samp) { font: var(--type-body-small); }
+:where(em, i) { font-style: var(--type-style); }

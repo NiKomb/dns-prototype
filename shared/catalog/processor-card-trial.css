@@ -1,0 +1,21 @@
+.processor-card-trial{position:relative}
+.processor-card-trial>.processor-trial-test-tag{position:absolute;top:0;right:0;z-index:2;padding:0 8px;border-radius:0 var(--card-radius) 0 4px;background:var(--background-success-main);color:var(--text-primary-inverse);font:var(--type-body-small);pointer-events:none}
+.processor-card-trial>.processor-trial-layer{min-height:120px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 120ms ease,visibility 0s linear 120ms}
+.processor-card-trial>dl.processor-trial-layer{display:flex;flex-direction:column;justify-content:flex-end}
+.processor-card-trial>.processor-trial-layer.is-active{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s;z-index:1}
+.processor-card-trial .processor-trial-table{width:450px;table-layout:fixed;border-collapse:collapse;border:0;font:var(--type-body-small)}
+.processor-card-trial .processor-trial-table col:first-child{width:150px}
+.processor-card-trial .processor-trial-table col:nth-child(n+2){width:150px}
+.processor-card-trial .processor-trial-table tr{height:20px}
+.processor-card-trial .processor-trial-table th,.processor-card-trial .processor-trial-table td{height:20px;padding:0 6px 0 0;border:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:var(--type-body-small)}
+.processor-card-trial .processor-trial-table thead th{font:var(--type-body-small-strong)}
+.processor-card-trial .processor-trial-table thead th:nth-child(2){padding-right:0}
+.processor-card-trial .processor-trial-column-heading{display:flex;align-items:center;gap:4px;width:100%;min-width:0;padding-right:4px}
+.processor-card-trial .processor-trial-column-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.processor-card-trial .processor-trial-table tbody th{color:var(--text-tertiary)}
+.processor-card-trial .processor-trial-table thead th:nth-child(3),.processor-card-trial .processor-trial-table tbody td:nth-child(3){color:var(--space-gray-200)}
+.processor-card-trial .processor-trial-field{display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.processor-card-trial .processor-trial-chevron{display:inline-flex;flex:0 0 14px;align-items:center;justify-content:center;width:14px;height:20px;color:var(--text-tertiary)}
+.processor-card-trial .processor-trial-chevron::before{content:'\e957';font:14px/1 'DNS Icons';display:inline-block}
+.processor-card-trial .processor-trial-empty{font:var(--type-body-small);margin:0}
+@media(max-width:1100px){.processor-card-trial>.processor-trial-layer{margin-top:4px}}

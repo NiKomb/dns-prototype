@@ -1,0 +1,7 @@
+/* Shared journal geometry. Roles choose from these steps, never local scales. */
+.journal-ui{
+ --journal-space-2:2px;--journal-space-4:4px;--journal-space-6:6px;--journal-space-8:8px;
+ --journal-space-12:12px;--journal-space-16:16px;--journal-space-20:20px;--journal-space-24:24px;--journal-space-32:32px;--journal-space-80:80px;
+ --journal-radius-4:4px;--journal-radius-12:12px;--journal-radius-16:16px;--journal-radius-20:20px;--journal-radius-24:24px;--journal-radius-32:32px;
+ --journal-icon-12:12px;--journal-icon-16:16px;--journal-icon-20:20px;--journal-icon-28:28px;--journal-icon-32:32px;
+}

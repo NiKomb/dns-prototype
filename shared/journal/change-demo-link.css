@@ -1,0 +1,4 @@
+/* Service navigation remains within the existing sidebar at every width. */
+.journal-ui .sidebar :is(.changes-demo-link,.components-library-link){justify-content:flex-start;align-items:flex-start;white-space:normal;text-align:left;gap:var(--journal-space-8);margin-top:var(--journal-space-12)}
+.journal-ui .sidebar :is(.changes-demo-link,.components-library-link) span{min-width:0;overflow-wrap:anywhere}
+.journal-ui .sidebar :is(.changes-demo-link,.components-library-link) .journal-icon{box-sizing:border-box;width:var(--journal-icon-20);height:var(--journal-icon-20);padding:var(--journal-space-2)}

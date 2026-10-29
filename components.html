@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <script src="shared/prototype-preview.js"></script>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Библиотека компонентов DNS</title>
+  <link rel="icon" href="assets/shared/favicon.svg" type="image/svg+xml">
+  <script src="shared/scrollbar.js"></script>
+  <link rel="stylesheet" href="shared/page-scrollbar.css?v=20260930-filter-groups-final">
+  <link rel="stylesheet" href="shared/catalog/styles.css?v=20260930-article-arrow-center">
+  <link rel="stylesheet" href="shared/catalog/processor-card-trial.css">
+  <link rel="stylesheet" href="pages/library/components.css?v=20260930-approved-filters">
+  <link rel="stylesheet" href="shared/contents/contents.css">
+  <script type="module" src="pages/library/components-contents.js"></script>
+  <script src="shared/image-loading.js?v=20260930-filter-groups-final"></script>
+  <script defer src="shared/catalog/action-button.js"></script>
+  <script defer src="shared/catalog/catalog-shared.js?v=20261001-article-entry"></script>
+  <script defer src="pages/configurator/data/article-data.js?v=20260930-filter-groups-final"></script>
+  <script defer src="shared/catalog/article-selection.js?v=20260930-filter-groups-final"></script>
+  <script defer src="pages/configurator/data/processor-data.js?v=20260930-filter-groups-final"></script>
+  <script defer src="pages/configurator/processor-filters.js?v=20260930-filter-groups-final"></script>
+  <script defer src="shared/catalog/configurator-components.js?v=20260930-filter-groups-final"></script>
+  <link rel="stylesheet" href="shared/catalog/build-recommendations.css">
+  <script defer src="pages/configurator/data/motherboard-data.js"></script>
+  <script defer src="pages/configurator/data/power-supply-data.js"></script>
+  <script defer src="pages/configurator/data/case-data.js"></script>
+  <script defer src="pages/configurator/data/gpu-data.js"></script>
+  <script defer src="shared/catalog/build-recommendations.js?v=20261001-article-entry"></script>
+  <script defer src="pages/library/library-layout.js"></script>
+  <script defer src="shared/catalog/processor-card-trial.js"></script>
+  <script defer src="pages/library/components.js?v=20261001-article-entry"></script>
+  <script defer src="pages/library/card-implementation-tree.js"></script>
+  <script defer src="pages/library/components-controls.js?v=20260930-approved-filters"></script>
+  <script type="module" src="pages/library/components-article.js?v=20260930-build-panel"></script>
+  <link rel="stylesheet" href="shared/telemetry/study.css">
+  <script src="shared/telemetry/report-theme.js"></script>
+  <script type="module" src="pages/library/components-study.js"></script>
+  <script type="module" src="pages/library/components-change-demo.js"></script>
+  <link rel="stylesheet" href="shared/journal/components.css">
+  <link rel="stylesheet" href="shared/journal/layout.css">
+  <link rel="stylesheet" href="shared/journal/specimens.css">
+  <script type="module" src="pages/library/components-journal.js"></script>
+</head>
+<body class="ds-page">
+  <header class="ds-shell ds-header"><h1>Библиотека компонентов</h1><a href="index.html?preview=1">Прототип ↗</a><a href="results">Журнал ↗</a></header>
+  <main class="ds-shell">
+    <section id="foundation" class="ds-section"><h2>Основа</h2><h3>Основные цвета конфигуратора</h3><div id="ds-colors" class="ds-colors"></div><div class="ds-shapes"><div class="ds-shape ds-card-shape">Карточка · <code id="ds-card-radius"></code></div><div class="ds-shape ds-control-shape">Контрол · <code id="ds-control-radius"></code></div></div></section>
+    <section id="typography" class="ds-section"><h2>Типографика</h2><div class="ds-typography"><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="ds-type-large type-h1">h1 · Соберите свой компьютер</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="ds-type-price type-h2">h2 · 35 999 ₽</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="type-h3">h3 · Заголовок раздела</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="type-body-strong">body-strong · Акцентный текст</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="ds-type-normal type-body">body · Основной текст</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="type-body-small-strong">body-small-strong · Компактный акцент</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="ds-type-small type-body-small">body-small · Характеристики</p></div><div class="ds-type-row"><code class="ds-type-metrics"></code><p class="type-caption">caption · Короткая подпись</p></div></div></section>
+    <section id="selection-elements" class="ds-section"><h2>Прототип · строки сборки</h2><span id="build-recommendations" class="ds-anchor" aria-hidden="true"></span><div id="ds-board-suggestions" class="parts-card ds-category-rows"></div><div id="ds-selection-elements" class="ds-element-grid"></div><span id="selection" class="ds-anchor" aria-hidden="true"></span><div id="ds-rows" class="ds-stack"></div></section>
+    <section id="cards" class="ds-section"><h2>Прототип · карточка товара</h2><div id="ds-cards" class="ds-stack"></div></section>
+    <section id="card-elements" class="ds-section"><h2>Прототип · элементы карточки</h2><div id="ds-card-elements" class="ds-element-grid"></div></section>
+    <section id="controls" class="ds-section"><h2>Прототип · фильтры и теги</h2><div class="ds-controls"><div class="ds-filter-demo"><div><input id="ds-search"></div><div id="ds-facets" class="filter-panel"></div></div><div class="ds-filter-demo"><div id="ds-tags" class="catalog-quick"></div><div id="ds-chips" class="ds-inline"></div><p id="ds-filter-empty" class="ds-caption">Фильтры не выбраны</p><button id="ds-reset" type="button">Сбросить фильтры</button></div></div><span id="review" aria-hidden="true"></span><span id="control-elements" class="ds-anchor" aria-hidden="true"></span><div id="ds-control-elements" class="ds-element-grid"></div></section>
+    <section id="comparison-components" class="ds-section"><h2>Прототип · сравнение</h2><div id="ds-comparison-elements" class="ds-element-grid"></div><div id="ds-comparison-tables" class="ds-stack"></div></section>
+    <section id="build-elements" class="ds-section"><h2>Прототип · сборка и оболочка</h2><div id="ds-build-elements" class="ds-element-grid"></div></section>
+    <section id="layout" class="ds-section"><h2>Прототип · каталог и загрузка</h2><div class="ds-inline"><button id="ds-open-modal" type="button">Окно каталога</button><button id="ds-open-modal-from-article" type="button">Вход из статьи</button></div><span id="ds-modal-geometry" hidden></span><div class="ds-component-group ds-group-wide"><h3>Каталог · ожидание загрузки</h3><div id="ds-catalog-loading" class="ds-specimen"></div></div></section>
+    <section id="catalog-articles" class="ds-section"><h2>Прототип · рекомендации</h2><div class="ds-recommendation-columns"><div id="ds-build-articles" class="ds-stack"></div><div class="ds-stack"><div class="ds-component-group"><h3>Статьи по выбранным фильтрам</h3><div id="ds-catalog-articles"></div></div><div class="ds-component-group"><h3>Общие руководства · пустая выдача</h3><div id="ds-general-guides"></div></div></div></div></section>
+    <section id="article-system" class="ds-section"><h2>Прототип · страница статьи</h2><div id="ds-article-library"></div></section>
+    <section id="study-system" class="ds-section"><h2>Прототип · участие в тесте</h2><div class="ds-element-grid"><div class="ds-component-group"><h3>Начало</h3><div class="ds-state-row"><div><p class="ds-caption">Обычное</p><div id="ds-study-start"></div></div><div><p class="ds-caption">С иллюстрацией</p><div id="ds-study-start-illustrated"></div></div></div></div><div class="ds-component-group"><h3>Завершение</h3><div class="ds-state-row"><div><p class="ds-caption">Обычное</p><div id="ds-study-complete"></div></div><div><p class="ds-caption">С иллюстрацией</p><div id="ds-study-complete-illustrated"></div></div></div></div><div class="ds-component-group"><h3>Запись</h3><div class="ds-state-row"><div><p class="ds-caption">Недоступна</p><div id="ds-study-unavailable"></div></div><div><p class="ds-caption">Ожидает отправки</p><div id="ds-study-pending"></div></div></div></div><div class="ds-component-group"><h3>Сохранение</h3><div id="ds-study-save" class="ds-state-row"></div></div></div></section>
+    <section id="journal-system" class="ds-section journal-ui" data-theme="light"><h2>Журнал · компоненты</h2><div class="journal-ui" data-theme="light" id="journal-specimens"><div class="toolbar ds-journal-theme"><button type="button" class="button" id="journal-specimen-theme">Тёмная тема</button></div><section id="system" class="journal-component-preview" aria-label="Компоненты журнала"></section><div id="toast" role="status" class="toast" hidden></div><dialog id="technical-dialog" class="technical-popup" aria-labelledby="technical-title"></dialog><dialog id="demo-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog></div></section>
+  </main>
+</body>
+</html>

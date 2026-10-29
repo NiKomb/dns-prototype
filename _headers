@@ -1,0 +1,8 @@
+/*
+  X-Robots-Tag: noindex
+
+/assets/articles/optimized/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/configurator/optimized/*
+  Cache-Control: public, max-age=31536000, immutable

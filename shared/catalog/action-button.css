@@ -1,0 +1,9 @@
+@import url("../color-tokens.css");
+@import url("../focus.css");
+.product-buttons button,.catalog-action-button{height:44px;border:1px solid var(--stroke-border);border-radius:var(--control-radius,12px);background:var(--controls-default-white);color:var(--text-primary);padding:0 18px;cursor:pointer; font: var(--type-body); }
+.product-buttons button:not(.favorite){font: var(--type-body);}
+.product-buttons button:not(.favorite):hover,.catalog-action-button:hover{background:var(--icon-brand);border-color:var(--stroke-border-brand);color:var(--text-primary-inverse)}
+.product-buttons button:not(.favorite):active,.catalog-action-button:active{background:var(--jupiter-orange-300)}
+.catalog-action-button.catalog-action-button-brand{background:linear-gradient(90deg,var(--button-start),var(--button-end));border-color:transparent;color:var(--text-primary-inverse)}
+.catalog-action-button.catalog-action-button-brand:hover{filter:brightness(1.05)}
+.catalog-action-button.catalog-action-button-brand:active{filter:brightness(.95)}
