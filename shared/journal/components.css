@@ -25,7 +25,7 @@
 .journal-ui{--focus-width:2px;--focus-offset:3px}
 .journal-ui :focus-visible{outline:var(--focus-width) solid var(--journal-focus);outline-offset:var(--focus-offset)}
 .journal-ui :focus:not(:focus-visible){outline:none}
-.journal-ui button:disabled{opacity:var(--journal-disabled-opacity);cursor:not-allowed}
+.journal-ui button:disabled{opacity:var(--journal-disabled-opacity);cursor:default}
 .journal-ui [hidden]{display:none!important}
 .journal-ui h1{margin:0}
 .journal-ui h2{margin:0}

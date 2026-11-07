@@ -15,6 +15,7 @@
 html[data-change-demo]{--focus-width:0px}
 html[data-change-demo] :is(:focus,:has(> :focus-visible)){outline:none}
 
-/* Unavailable controls keep the same cursor over their labels and icons. */
-:is(button,input,select,textarea):disabled,[aria-disabled="true"] { cursor:not-allowed !important; }
+/* Unavailable controls use the ordinary arrow, except adding/replacing parts. */
+:is(button,input,select,textarea):disabled,[aria-disabled="true"] { cursor:default !important; }
+:is([data-ds-component="catalog.select"],[data-ds-component="catalog.replace"],[data-ds-component="catalog.comparisonAdd"],[data-ds-component="catalog.comparisonBrowse"],.part-row>button:not(.build-board-toggle)):is(:disabled,[aria-disabled="true"]) { cursor:not-allowed !important; }
 :is(:disabled,[aria-disabled="true"]) * { cursor:inherit !important; }

@@ -537,8 +537,8 @@ body.modal-open{overflow:hidden}
 .selected-quantity button{width:24px;height:32px;flex:0 0 24px;display:grid;place-items:center;padding:0;border:0;border-radius:6px;background:transparent;color:var(--icon-primary);font-size:20px;line-height:1;cursor:pointer}
 .selected-quantity{padding:2px}
 .selected-quantity button:not(:disabled):hover{background:var(--controls-hover-gray);color:var(--text-brand-hover)}
-.selected-quantity button:disabled,.selected-quantity button:disabled:hover{background:transparent;color:var(--icon-hover);cursor:not-allowed}
-.selected-quantity.is-disabled{border:1px solid var(--stroke-border);background:var(--background-neutral-light);color:var(--text-disabled);cursor:not-allowed}
+.selected-quantity button:disabled,.selected-quantity button:disabled:hover{background:transparent;color:var(--icon-hover)}
+.selected-quantity.is-disabled{cursor:default;border:1px solid var(--stroke-border);background:var(--background-neutral-light);color:var(--text-disabled)}
 .selected-quantity.is-disabled strong,.selected-quantity.is-disabled button:disabled,.selected-quantity.is-disabled button:disabled:hover{color:var(--text-disabled)}
 .city .location-icon{width:16px;height:16px;fill:none;stroke:var(--icon-primary);stroke-width:1.5;flex-shrink:0}
 
@@ -709,7 +709,7 @@ body.modal-open{overflow:hidden}
 .comparison-category-count{font: var(--type-body-small);opacity:.75}
 .comparison-clear,.comparison-undo{font: var(--type-body-small);border:0;border-radius:8px;padding:8px 12px;background:var(--background-primary-surface);color:var(--text-primary);cursor:pointer}
 .comparison-clear:not(:disabled):hover,.comparison-undo:hover{box-shadow:inset 0 0 0 50px var(--transparency-dark-dark-4)}
-.comparison-clear:disabled,.comparison-browse:disabled{opacity:.45;cursor:not-allowed}
+.comparison-clear:disabled,.comparison-browse:disabled{opacity:.45}
 .comparison-undo-notice{font: var(--type-body-small);display:flex;align-items:center;gap:12px;flex:none;padding:8px 16px;background:var(--background-secondary);}
 .comparison-undo-notice[hidden]{display:none}
 .comparison-picker-host>.build-board-suggestions{position:relative;top:0;left:0;right:auto;width:100%;box-sizing:border-box}

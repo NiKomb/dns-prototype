@@ -42,7 +42,7 @@
 .part-row:has(>.build-board-toggle:not([hidden])){grid-template-columns:50px minmax(0,1fr) auto 92px 36px}
 @media(max-width:767px){.part-row:has(>.build-board-toggle:not([hidden])){grid-template-columns:50px minmax(0,1fr) 80px 36px}.part-row>.build-board-toggle{grid-column:4}.part-row:has(>.build-board-toggle:not([hidden]))>button:not(.build-board-toggle){grid-column:3}}
 
-.part-row>button:disabled,.part-row>button:disabled:hover,.part-row>button:disabled:active{color:var(--text-disabled);background:var(--background-neutral-light);border-color:var(--stroke-border);box-shadow:none;cursor:not-allowed}
+.part-row>button:disabled,.part-row>button:disabled:hover,.part-row>button:disabled:active{color:var(--text-disabled);background:var(--background-neutral-light);border-color:var(--stroke-border);box-shadow:none}
 
 /* Comparison ribbon adds to the table and retains its neutral hover. */
 .catalog-comparison .build-board-add:hover{background:var(--controls-hover-gray)}

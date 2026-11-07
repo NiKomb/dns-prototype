@@ -234,7 +234,7 @@
 .journal-ui .journal-attempt-link input:disabled{color:var(--journal-text-secondary);opacity:var(--journal-disabled-opacity)}
 .journal-ui .journal-attempt-link .journal-copy-link{position:absolute;right:var(--journal-space-4);top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:32px;min-height:32px;padding:0;background:transparent;color:var(--journal-icon-supporting)}
 .journal-ui .journal-attempt-link .journal-copy-link:hover{color:var(--journal-text-primary);background:transparent}
-.journal-ui .journal-attempt-link .journal-copy-link:disabled{opacity:var(--journal-disabled-opacity);cursor:not-allowed}
+.journal-ui .journal-attempt-link .journal-copy-link:disabled{opacity:var(--journal-disabled-opacity);cursor:default}
 .journal-ui .journal-control-row>a.button{white-space:nowrap;min-height:40px;text-decoration:none}
 @media(max-width:760px){.journal-ui .journal-control-row{min-width:680px}}
 
