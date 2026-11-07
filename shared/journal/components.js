@@ -119,7 +119,7 @@ export function refreshButton(action){
 // Keep service messages outside the page flow, with an accessible announcement.
 export function systemStatus(message){
  const root=node('div',null,'journal-system-status'),announce=node('span',null,'visually-hidden');
- const control=iconButton('Состояние журнала','refresh-cw',()=>show(true));
+ const control=iconButton('Состояние журнала','circle-alert',()=>show(true));
  control.setAttribute('aria-controls',message.id);control.setAttribute('aria-expanded','false');
  message.classList.add('journal-system-message');message.setAttribute('aria-live','off');
  root.append(control,message,announce);

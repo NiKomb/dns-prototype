@@ -164,7 +164,7 @@ function library(){
    if(!compactGroups.has(kind)){const group=node('div',null,'library-item');group.dataset.componentGroup=kind;group.append(node('p',titles[kind]||caption.split(' · ')[0],'library-label'),node('div',null,'library-samples'));container.append(group);compactGroups.set(kind,group);}
    const group=compactGroups.get(kind),sample=node('div',null,'library-sample');
    const specificOrigin=origin==='Гипотезы'?(content.dataset.overviewHypothesis||content.querySelector('[data-hypothesis-statement]')?.dataset.hypothesisStatement):null;sample.append(node('p','Раздел: '+origin+(specificOrigin?' · '+specificOrigin:''),'library-caption library-origin'));
-   const wide=['sessions','build','table','Прохождение','H2','hypothesis-section'].includes(kind);group.classList.toggle('library-wide',wide);
+   const wide=['sessions','build','table','Прохождение','H2','hypothesis-section','Системный статус'].includes(kind);group.classList.toggle('library-wide',wide);
    if(wide)sample.classList.add('library-sample-wide');
    if(kind==='hypothesis'||kind==='metric')sample.classList.add('library-sample-card');
    const state=kind==='notice'?content.firstChild.textContent:kind==='metric'?content.firstChild.textContent:caption.split(' · ').slice(1).join(' · ')||(['screenState','sessions','table','progress'].includes(kind)?caption:'');
@@ -201,7 +201,7 @@ function library(){
  ext('13 · Вложенный список',nestedList([{label:'Каталоги',items:['Процессоры','Материнские платы','Видеокарты'],open:true},{label:'Материалы',items:['Обзоры и тесты','Сравнительные обзоры']}]));
  ext('14 · Хлебные крошки',breadcrumbs([{label:'Исследование',href:'#overview'},{label:'Прохождения',href:'#sessions'},{label:'Прохождение'}]));
  ext('15 · Иконки действий',row(grid('journal-shortcuts',shortcutButton('Демонстрация изменений','square-line-vertical',()=>toast('Образец перехода в деморежим')),shortcutButton('Чистый прототип','layout-header-side-content',()=>toast('Образец перехода в прототип'))),refreshButton(()=>new Promise(resolve=>setTimeout(()=>{toast('Образец обновления');resolve();},800))),exportControl(exportData)));
- const sampleStatus=node('p','Подготовка сохранённых результатов…');sampleStatus.id='journal-status-specimen';ext('27 · Системный статус',row(node('strong','Обзор'),systemStatus(sampleStatus)));
+ const sampleStatus=node('p','Подготовка сохранённых результатов…');sampleStatus.id='journal-status-specimen';const statusHeading=node('div',null,'page-heading'),statusActions=node('div',null,'toolbar');statusActions.append(systemStatus(sampleStatus));statusHeading.append(node('strong','Обзор'),statusActions);ext('27 · Системный статус',statusHeading);if(!source.compactSpecimens)extended.lastChild.classList.add('library-wide');
  ext('Панель',panel('История попыток','Исследовательские и технические проверки',button('Экспорт данных',exportData)));
  const presentation=tabs([['sessions','Сессии'],['materials','Материалы']],'sessions',value=>{for(const [index,item]of [...presentation.children].entries()){const active=['sessions','materials'][index]===value;item.setAttribute('aria-pressed',String(active));item.classList.toggle('active',active);}toast('Представление переключено');});ext('Представление',presentation);
  ext('Прогресс без измерений',progress('Открыли статьи',null,null));
@@ -409,7 +409,7 @@ function render(){
  const parts=(source.route||location.hash.slice(1)).split('/');state.section=views[parts[0]]?parts[0]:'overview';const [title,description]=views[state.section];
  $('#page-title').textContent=title;$('#page-description').textContent=journalText(state.section==='overview'?`Выбор комплектующих · ${model.overview?.attempts??scenario.attempts??0} исследовательских попыток`:description);$('#breadcrumb').replaceChildren();document.title=`${title} · ${source.live?'Журнал тестирования':'Макет журнала'} DNS`;
  for(const a of $('#navigation').children){if(a.dataset.section===state.section)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}
- $('#page-actions').replaceChildren(...[themeControl,refreshButton(refresh),exportControl(exportData)].filter(Boolean));
+ $('#page-actions').replaceChildren(...[source.headerStatus,themeControl,refreshButton(refresh),exportControl(exportData)].filter(Boolean));
  if(refreshing){const control=$('#page-actions [aria-label="Обновить"]');control.disabled=true;control.setAttribute('aria-busy','true');}
  $('#title-actions').replaceChildren();if($('#technical-dialog').open)$('#technical-dialog').close();
  ensureLayoutFacts();

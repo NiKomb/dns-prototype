@@ -127,7 +127,7 @@
 .journal-ui .journal-system-status{position:relative;flex:0 0 36px;height:36px;z-index:30}
 .journal-ui .journal-system-status[hidden]{display:none}
 .journal-ui .journal-system-status[data-tone=error]>.icon-button{color:var(--journal-error-text)}
-.journal-ui .journal-system-message{position:absolute;top:calc(100% + 8px);left:0;width:min(320px,calc(100vw - 16px));margin:0;border:0;overflow-wrap:anywhere}
+.journal-ui .journal-system-message{position:absolute;top:calc(100% + 8px);right:0;width:min(320px,calc(100vw - 16px));margin:0;border:0;overflow-wrap:anywhere}
 .journal-ui .journal-system-message[hidden]{display:none}
 .journal-ui .journal-system-message .button{margin-top:8px}
 

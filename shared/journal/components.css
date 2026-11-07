@@ -328,9 +328,9 @@
 .journal-ui .nested-status-group{margin:4px 0;padding:0;background:transparent}
 .journal-ui .nested-status-group>.disclosure-trigger{padding:10px; font: var(--type-body); }
 .journal-ui .nested-status-group>.disclosure-body{padding:0 0 0 14px}
-.journal-ui .icon-button[aria-busy=true]>.journal-icon{animation:journal-refresh 1s linear infinite}
+.journal-ui .icon-button[aria-busy=true]>.journal-icon[data-icon=arrows-rotate-right]{animation:journal-refresh 1s linear infinite}
 
-@media(prefers-reduced-motion:reduce){.journal-ui .icon-button[aria-busy=true]>.journal-icon{animation-duration:3s}}
+@media(prefers-reduced-motion:reduce){.journal-ui .icon-button[aria-busy=true]>.journal-icon[data-icon=arrows-rotate-right]{animation-duration:3s}}
 .journal-ui .field>.badge{align-self:flex-start}
 
 /* Article session median: shared by the scenario table and library specimen. */
