@@ -32,7 +32,7 @@ export function heartVisitTable(id,h,title=x=>x){
  }));
 }
 export function heartDetail(id,h,title){
- const root=panel(`${id} · ${id==='H2'?'Практические данные и выбор':'Рекомендация и выбор'}`,h2Labels[h?.status]||'Не измерялось');root.classList.add(id.toLowerCase()+'-detail');
+ const root=panel(`${id.slice(1)} · ${id==='H2'?'Практические данные и выбор':'Рекомендация и выбор'}`,h2Labels[h?.status]||'Не измерялось');root.classList.add(id.toLowerCase()+'-detail');
  root.append(notice('Доступность и результат',`${id==='H2'?'Подтверждённых открытий практического материала: '+(h?.opened??0):'Непустое предложение: '+(h?.offered?'да':'не подтверждено')} · ${h?.viewed?'Просмотр по критерию подтверждён':'Подходящий просмотр не подтверждён'} · ${orders[h?.order]||'Связанный выбор не подтверждён'}`));
  if(h?.visits?.length)root.append(heartVisitTable(id,h,title));
  if(id==='H2'&&h?.legacy_time_ms!=null)root.append(notice('Прежнее измерение · от действия с данными',`${h1Time(h.legacy_time_ms)} · Отдельно от нового времени показа`));

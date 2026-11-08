@@ -67,7 +67,7 @@ export function approvedLayout({model,state,navigate,rerender,retryLayout,openGr
  }
  function hypothesisCard(h){
   const p=node('article',null,'panel approved-hypothesis');p.dataset.overviewHypothesis=h.id;
-  p.setAttribute('aria-label','Подробнее: '+h.id+' · '+hypothesisMetricCopy[h.id][h.id==='H1'?'table_2plus':'selection'].title);
+  p.setAttribute('aria-label','Подробнее: '+h.id.slice(1)+' · '+hypothesisMetricCopy[h.id][h.id==='H1'?'table_2plus':'selection'].title);
   p.addEventListener('click',event=>{if(event.target.closest('.approved-statement'))return;event.preventDefault();event.stopPropagation();state.hypothesis=h.id;navigate('hypotheses');});
   const a=h.measurements,mainKey=h.id==='H1'?'table_2plus':'selection',secondaryKey=h.id==='H1'?'started':'viewing';
   const pct=r=>r?.denominator>0?Math.round(r.percent)+'%':'Нет данных';
@@ -75,7 +75,7 @@ export function approvedLayout({model,state,navigate,rerender,retryLayout,openGr
   const auxRow=(label,value,caption)=>group('approved-aux-row',group('approved-fact-line',node('strong',value),group('approved-metric-copy',node('small',caption),copy(label))));
   const main=auxRow(metricHeadings[h.id][0],pct(primary),primary?.denominator>0?`${primary.numerator} из ${primary.denominator} ${h.id==='H1'?'пригодных сессий':'просмотревших'}`:'Нет данных для расчёта');main.classList.add('approved-primary');
   const aux=[auxRow(metricHeadings[h.id][1],pct(secondary),secondary?.denominator>0?`${secondary.numerator} из ${secondary.denominator} ${h.id==='H1'?'с каталогом':h.id==='H2'?'открывших':'с предложением'}`:'Нет данных для расчёта'),auxRow(metricHeadings[h.id][2],h1Time(time?.median_ms),`Медиана · ${time?.sessions??0} сессий`)];
-  const head=node('header'),titleLink=node('a',h.id+' · '+hypothesisMetricCopy[h.id][mainKey].title,'approved-hypothesis-link');titleLink.href='#hypotheses';const title=node('h3');title.append(titleLink);head.append(title);
+  const head=node('header'),titleLink=node('a',h.id.slice(1)+' · '+hypothesisMetricCopy[h.id][mainKey].title,'approved-hypothesis-link');titleLink.href='#hypotheses';const title=node('h3');title.append(titleLink);head.append(title);
   const text=node('details',null,'approved-review approved-statement'),trigger=node('summary',null,'approved-statement-trigger');
   trigger.dataset.journalControl='row';
   const statementCopy=node('span',journalTextWithoutPeriods(h.description));
@@ -160,8 +160,8 @@ export function approvedLayout({model,state,navigate,rerender,retryLayout,openGr
  }
  function hypotheses(){
   const root=node('div',null,'approved-content');root.dataset.approvedSection='hypotheses';const id=state.hypothesis||'H1',h=model.hypotheses.find(h=>h.id===id);
-  root.append(tabs([['H1','H1 · Сравнение'],['H2','H2 · Данные'],['H3','H3 · Материалы']],id,value=>{state.hypothesis=value;state.materials=false;rerender();},'Выбор гипотезы',{animated:true}));
-  const statement=section(h.id+' · '+h.title),description=node('p',null,'approved-full-statement');description.textContent=journalTextWithoutPeriods(h.description);statement.dataset.hypothesisStatement=id;statement.append(description);root.append(statement);
+  root.append(tabs([['H1','1 · Сравнение'],['H2','2 · Данные'],['H3','3 · Материалы']],id,value=>{state.hypothesis=value;state.materials=false;rerender();},'Выбор гипотезы',{animated:true}));
+  const statement=section(h.id.slice(1)+' · '+h.title),description=node('p',null,'approved-full-statement');description.textContent=journalTextWithoutPeriods(h.description);statement.dataset.hypothesisStatement=id;statement.append(description);root.append(statement);
   const measures=section('Наблюдаемые показатели');measures.classList.add('approved-measurements');
   const relatedScenario=button('Связанный сценарий →',()=>{state.scenario=id==='H1'?'comparison':'selection';navigate('scenarios');});relatedScenario.classList.add('approved-related-scenario');
   measures.append(group('approved-metric-grid',...metrics(h)),relatedScenario);
@@ -243,7 +243,7 @@ export function approvedLayout({model,state,navigate,rerender,retryLayout,openGr
     'От открытия до ручного выбора той же категории в том же посещении и вкладке. Повторное открытие начинает новый отсчёт; закрытие завершает его. Берём первую подходящую последовательность.',
     'Выбор без связанного каталога засчитываем, но время для него не считаем'),
    groundsBlock('Время после просмотра',[],
-    'Для H2 — от показа практических данных, для H3 — от открытия рекомендации. До выбора считаем отдельные медианы и число замеров.',
+    'Для 2 — от показа практических данных, для 3 — от открытия рекомендации. До выбора считаем отдельные медианы и число замеров.',
     'Просмотр и последующий выбор не доказывают, что материал помог или повлиял на решение'),
    common
   ];
@@ -291,7 +291,7 @@ export function approvedLayout({model,state,navigate,rerender,retryLayout,openGr
   }else{
    const path=section('Основной путь выбора детали','Доля от предыдущего шага · число сессий');path.append(scenarioRoute(['Начало задания','Каталог','Ручной выбор или замена','Сохранение полной сборки']),flow(['Начали задание','Открыли каталог','Выбрали / заменили','Сохранили сборку'],facts?.eligible?facts.selection:null,false,[null,'начавших задание','открывших каталог','выбравших деталь']));path.querySelector('.approved-flow>li:last-child').append(infoTooltip('Как считается сохранение сборки',metricExplanation({calculation:'Сохранили полную сборку ÷ выбрали или заменили деталь × 100%',explanation:'Сохранение это общий итог задания. Если сборку не сохранили, выбор детали всё равно засчитываем'})));root.append(path,heading('Необязательные ветви'));
    const comp=section('Сравнение');comp.append(flow(['Начали сравнение','Дошли до таблицы','Выбрали деталь'],facts?.comparison.eligible?facts.comparison.groups.slice(1):null,true,[null,'начавших сравнение','дошедших до таблицы']),comparisonChoices());
-   const article=section('Статья');for(const id of ['H2','H3']){const f=facts?.[id];article.append(copy(id+' · '+(id==='H2'?'Практические данные':'Рекомендованные материалы')),flow(['Открыли статью',id==='H2'?'Увидели целевые данные':'Просмотрели статью','Вернулись и выбрали деталь'],f?[f.opened,f.viewed,f.direct]:null,true,[null,'открывших статью',id==='H2'?'увидевших данные':'просмотревших статью']));}
+   const article=section('Статья');for(const id of ['H2','H3']){const f=facts?.[id];article.append(copy(id.slice(1)+' · '+(id==='H2'?'Практические данные':'Рекомендованные материалы')),flow(['Открыли статью',id==='H2'?'Увидели целевые данные':'Просмотрели статью','Вернулись и выбрали деталь'],f?[f.opened,f.viewed,f.direct]:null,true,[null,'открывших статью',id==='H2'?'увидевших данные':'просмотревших статью']));}
    const picker=section('Быстрый подбор');picker.dataset.quickPickerBranch='';picker.append(flow(['Начали задание','Вызвали ленту','Добавили из ленты'],facts?.quickPicker?.groups,true,[null,'начавших задание','вызвавших ленту']));
    root.append(group('approved-grid2',comp,picker,article));
    const information=section('Обращение к информации');information.append(infoTable(),spacedRemark('Внутри каждой гипотезы группы не пересекаются'),disclosure('Наблюдения до и после выбора',...['H2','H3'].map(id=>copy(narrative(id)[1]))));root.append(information,scenarioGrounds(false));

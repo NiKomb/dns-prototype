@@ -96,7 +96,7 @@ function exportPrepared(format,popup){
   if(detail)sections.push(['Прохождение '+detail.id,views.detail(detail)]);
   else{
    sections.push(['Обзор',views.overview()]);
-   for(const hypothesis of ['H1','H2','H3']){local.hypothesis=hypothesis;local.materials=true;sections.push(['Гипотеза '+hypothesis,views.hypotheses()]);}
+   for(const hypothesis of ['H1','H2','H3']){local.hypothesis=hypothesis;local.materials=true;sections.push(['Гипотеза '+hypothesis.slice(1),views.hypotheses()]);}
    for(const scenario of ['comparison','selection']){local.scenario=scenario;sections.push([scenario==='comparison'?'Сценарий: сравнение товаров':'Сценарий: выбор детали',views.scenarios()]);}
    const list=views.sessions(),body=list.querySelector('tbody'),count=sessions.filter(s=>local.purpose==='all'||(local.purpose==='qa')===s.qa).length;
    if(body)for(let page=2;page<=Math.ceil(count/6);page++){local.page=page;body.append(...views.sessions().querySelector('tbody').children);}
@@ -208,7 +208,7 @@ function library(){
  ext('Показатель результата',metric('Результат','Сборка сохранена','Завершённая попытка','success'));
  ext('16 · Раскрытие строк · 10 последних сессий',limitedRows(sessionTable(sessions),10,'Показать все сессии'));
  ext('17 · Диалог',button('Открыть подтверждение',()=>confirmDialog('Приостановить демонстрацию?','Это образец диалога. Реальный сбор данных не меняется.','Приостановить',()=>toast('Действие в образце подтверждено'))));
- ext('18 · Метаданные',metadataTags(['H1 · недоступно','H2 · товар из статьи','H3 · материалы'],index=>toast('Выбрана гипотеза H'+(index+1)),1));
+ ext('18 · Метаданные',metadataTags(['1 · недоступно','2 · товар из статьи','3 · материалы'],index=>toast('Выбрана гипотеза '+(index+1)),1));
  ext('26 · Состояние попытки · отдельно от результата',attemptStatusCell({status:'incomplete',build_count:2,saving:'not_saved'},{participation:'abandoned',participationLabel:participationLabels.abandoned}));
  const buildSamples=[...sessions[0].build,['Блок питания','Пример неизвестной цены',null],['Корпус','Пример старой записи без цены',undefined],['Процессор','Пример нулевой цены',0]];
  ext('19 · Состав сборки',limitedRows(buildTable(buildSamples.map(([category,name,price])=>[category,name,buildPrice(price)])),3,'Показать все комплектующие'));
@@ -225,7 +225,7 @@ function library(){
 
 function libraryScreens(){
  const section=node('section',null,'journal-screen-specimens');section.dataset.libraryJournalScreens='';section.append(node('h2','Актуальные блоки журнала'),node('p','Демонстрационные данные. Не результаты исследования.','muted'));
- for(const [origin,name,overrides]of [['Обзор','overview',{}],['Гипотезы · H1','hypotheses',{hypothesis:'H1'}],['Сценарии · Сравнение','scenarios',{scenario:'comparison'}],['Сценарии · Выбор детали','scenarios',{scenario:'selection'}],['Прохождения · Список','sessions',{}],['Прохождения · Карточка попытки','detail',{}]]){
+ for(const [origin,name,overrides]of [['Обзор','overview',{}],['Гипотезы · 1','hypotheses',{hypothesis:'H1'}],['Сценарии · Сравнение','scenarios',{scenario:'comparison'}],['Сценарии · Выбор детали','scenarios',{scenario:'selection'}],['Прохождения · Список','sessions',{}],['Прохождения · Карточка попытки','detail',{}]]){
   const entry=node('section',null,'journal-screen-example'),host=node('div'),local={section:name,purpose:'research',sessionTab:'all',participation:'all',query:'',page:1,layoutFacts:source.specimenFacts,...overrides};let selected=sessions[0];entry.dataset.journalOrigin=origin;entry.append(node('h3','Раздел: '+origin,'library-label'),host);
   function navigate(section,id){local.section=id?'detail':section;if(id)selected=sessions.find(s=>s.id===id)||sessions[0];draw();}
   function draw(){const actualOrigin=local.section==='hypotheses'?'Гипотезы · '+local.hypothesis:local.section==='scenarios'?'Сценарии · '+(local.scenario==='selection'?'Выбор детали':'Сравнение'):local.section==='overview'?'Обзор':local.section==='detail'?'Прохождения · Карточка попытки':'Прохождения · Список';entry.dataset.journalOrigin=actualOrigin;entry.firstChild.textContent='Раздел: '+actualOrigin;const view=approvedLayout({model,state:local,navigate,rerender:draw,retryLayout:()=>{},openGroup(ids,name){local.sessionGroup={ids,name};local.page=1;local.section='sessions';draw();},sessionLink(s){const b=button(s.id,()=>navigate('sessions',s.id),'text','link');b.dataset.sessionId=s.id;return b;},openTechnical:()=>toast('Демонстрационные технические сведения')});host.replaceChildren(local.section==='detail'?view.detail(selected):view[local.section]());}
@@ -266,7 +266,7 @@ function recentOverviewTable(items){
   build.append(node('span',Number.isInteger(observed?.build_count)?`${observed.build_count} из 5 деталей`:selected.length?'Полный состав неизвестен':'Состав неизвестен'));
   if(selected.length)build.append(node('span',selected.map(id=>categoryNames[id]).join(' · '),'cell-secondary'));
   build.append(node('span',({saved:'Сохранено',not_saved:'Не сохранено',unknown:'Сохранение неизвестно'})[observed?.saving]||'Сохранение неизвестно','cell-secondary'));
-  const actions=node('div',null,'overview-observations');for(const [id,text]of overviewObservations(s)){const line=node('p');line.append(node('strong',id+': '),node('span',text));actions.append(line);}
+  const actions=node('div',null,'overview-observations');for(const [id,text]of overviewObservations(s)){const line=node('p');line.append(node('strong',id.replace(/^H(?=[123]$)/,'')+': '),node('span',text));actions.append(line);}
   return [attempt,build,actions];
  });
  const root=table(['Попытка','Сборка','Статьи и сравнение'],rows);root.querySelector('table').classList.add('overview-recent-table');return root;
@@ -305,7 +305,7 @@ function overview(screen=$('#screen')){
  recent.append(items.length?recentOverviewTable(items):empty('Пока нет исследовательских попыток','Здесь появятся прохождения выбранного задания.'));screen.append(recent);
 }
 function hypothesisPanel(h,specimen=false){
-  const p=panel(`${h.id} · ${h.title}`);p.classList.add('hypothesis-panel');p.dataset.hypothesis=h.id;p.id=(specimen?'hypothesis-specimen-':'hypothesis-')+h.id;p.tabIndex=-1;
+  const p=panel(`${h.id.slice(1)} · ${h.title}`);p.classList.add('hypothesis-panel');p.dataset.hypothesis=h.id;p.id=(specimen?'hypothesis-specimen-':'hypothesis-')+h.id;p.tabIndex=-1;
   if(h.id!=='H1')p.firstChild.append(button('Открыть связанные сессии',()=>openRelatedSessions(h.id)));
   p.append(node('p',journalTextWithoutPeriods(h.description),'source-statement'));
   if(h.id==='H1'){
@@ -377,12 +377,12 @@ function sessionDetailPanels(s){
  const h=panel('Наблюдения по гипотезам','Что произошло в этой попытке');
  let coverage;
  const observation=node('div',null,'hypothesis-observation');observation.setAttribute('aria-live','polite');
- const labels=s.coverageLabels||['H1 · не измерялось','H2 · '+h2Labels[s.h2.status],qa?'H3 · QA исключена':s.visits.length?`H3 · ${s.visits.length} открытия`:'H3 · без открытия'];
- const observations=s.observations||[['H1 · Найти сравнение','Не измерялось. '+h1Rule],['H2 · Проверяемые данные',h2Observation(s.h2)],['H3 · Подходящие материалы Клуба DNS',qa?'Техническая попытка не входит в исследовательские расчёты.':s.visits.length?`Открыто материалов: ${s.visits.length}. ${s.visits.map(v=>v.title).join(' · ')}. Открытие не доказывает чтение или влияние на выбор.`:'Материалы в этой попытке не открывались.']];
+ const labels=s.coverageLabels||['1 · не измерялось','2 · '+h2Labels[s.h2.status],qa?'3 · QA исключена':s.visits.length?`3 · ${s.visits.length} открытия`:'3 · без открытия'];
+ const observations=s.observations||[['1 · Найти сравнение','Не измерялось. '+h1Rule],['2 · Проверяемые данные',h2Observation(s.h2)],['3 · Подходящие материалы Клуба DNS',qa?'Техническая попытка не входит в исследовательские расчёты.':s.visits.length?`Открыто материалов: ${s.visits.length}. ${s.visits.map(v=>v.title).join(' · ')}. Открытие не доказывает чтение или влияние на выбор.`:'Материалы в этой попытке не открывались.']];
  coverage=metadataTags(labels,index=>observation.replaceChildren(notice(...observations[index])),1);coverage.classList.add('detail-coverage');
  h.append(coverage,observation);observation.replaceChildren(notice(...observations[1]));
  const r=panel('Маршрут попытки','Записанные переходы и результаты выбора');r.classList.add('attempt-route');r.append(route(s.route));if(s.comparisonMeasured===false)r.append(notice('Сравнение товаров','Не измерялось. Новые измерения сравнения в этой попытке отсутствуют.'));if(!s.route.length)r.append(node('p','Маршрут не доставлен.','muted'));if(s.returnObservation)r.append(notice('Быстрые возвраты',`Зафиксировано: ${s.returnObservation.quick_returns}. Наблюдение «Возврат»: ${s.returnObservation.wandering?'есть':'не зафиксировано'}. Порог — три возврата из товарных статей за ≤ 7 секунд без выбора между ними; общие руководства исключены.`));screen.append(grid('attempt-summary',h,r));
- const a1=s.h1,first=a1?.first_action,h1Panel=panel('H1 · Найти сравнение',h1Labels[a1?.status]||'Не измерялось');h1Panel.classList.add('h1-detail');
+ const a1=s.h1,first=a1?.first_action,h1Panel=panel('1 · Найти сравнение',h1Labels[a1?.status]||'Не измерялось');h1Panel.classList.add('h1-detail');
  const observed=value=>value===true?'Да':value===false?'Не зарегистрировано':a1?.status==='not_measured'||!a1?'Не измерялось':'Неизвестно';
  const timeCaption=a1?.time_status==='unconfirmed'?'Время не подтверждено':a1?.time_status==='no_action'?'Действий сравнения не зарегистрировано':a1?.time_status==='measured'?'От открытия каталога в этом посещении':'Не измерялось';
  h1Panel.append(grid('evidence-metrics',hypothesisMetric('H1','started',observed(a1?.started),'Одно наблюдение на сессию'),hypothesisMetric('H1','table_2plus',observed(a1?.table_2plus),'Товары одной категории'),hypothesisMetric('H1','time',h1Time(a1?.time_to_first_action_ms),timeCaption)),notice('Первое действие',first?`${comparisonActionNames[first.action]||first.action} · ${categoryNames[first.category_id]||'Категория не записана'}`:a1?.eligible?'Не зарегистрировано':'Не измерялось или не доставлено'),notice('Состояние измерения',`${h1Labels[a1?.status]||'Не измерялось'}${a1?.coverage==='partial'?' · Частичные данные':''}${a1?.incomplete?' · Есть разрыв':''} · ${qa?'QA исключена из сводки':a1?.eligible?'Входит в сводку':'Не входит в знаменатель'}`));

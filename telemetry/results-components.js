@@ -143,18 +143,18 @@ export function coverageNote(r){
 export function hypothesisCards(r,onOpen){
  const grid=node('div',null,'report-hypothesis-cards');grid.dataset.dsComponent='study.hypothesisCards';
  const h2=r?.H2,h3=r?.H3;
- for(const [title,value,note]of [['H1 · Сравнение','Недоступно','Функция ещё не реализована'],['H2 · Данные',ratio(h2?.action||0,h2?.available||0),h2?.available?'Действие с доступным блоком':'Нет измеренных данных'],['H3 · Клуб',ratio(h3?.choice_after_return||0,h3?.returned||0),h3?.returned?'Выбор после возврата из статьи':'Нет измеренных возвратов']]){
+ for(const [title,value,note]of [['1 · Сравнение','Недоступно','Функция ещё не реализована'],['2 · Данные',ratio(h2?.action||0,h2?.available||0),h2?.available?'Действие с доступным блоком':'Нет измеренных данных'],['3 · Клуб',ratio(h3?.choice_after_return||0,h3?.returned||0),h3?.returned?'Выбор после возврата из статьи':'Нет измеренных возвратов']]){
   const card=node('button',null,'ds-panel report-card-link');card.type='button';card.append(node('h3',title),node('strong',value,'report-hypothesis-value'),reportNote(note));card.onclick=onOpen;grid.append(card);
  }return grid;
 }
 export function hypothesisPanels(r,onSessions){
  const root=node('div',null,'report-hypothesis-panels');root.dataset.dsComponent='study.hypothesisPanels';
- const h1=reportSection('H1 · Найти сравнение','НЕДОСТУПНО');h1.append(reportNote('Вход в сравнение и сопоставление товаров ещё не реализованы.'),reportNote('Подключить измерение после появления функции. Отсутствие сравнения не считается неуспехом попытки.'));
- const h2=reportSection('H2 · Проверяемые данные','ВНУТРИ СТАТЕЙ'),a=r?.H2||{};
+ const h1=reportSection('1 · Найти сравнение','НЕДОСТУПНО');h1.append(reportNote('Вход в сравнение и сопоставление товаров ещё не реализованы.'),reportNote('Подключить измерение после появления функции. Отсутствие сравнения не считается неуспехом попытки.'));
+ const h2=reportSection('2 · Проверяемые данные','ВНУТРИ СТАТЕЙ'),a=r?.H2||{};
  h2.append(reportNote('Практические результаты и условия теста в структурированных обзорах.'));
  const metrics=node('div',null,'report-evidence-metrics');
  for(const [value,label,note]of [[a.available||'—','С доступным блоком',a.available?'Результаты или условия теста':'Нет измеренных данных'],[ratio(a.action||0,a.available||0),'С действием по блоку','Раскрытие, изображение, таблица, содержание'],[ratio(a.choice_after_action||0,a.action||0),'С последующим выбором',`Та же категория: ${a.action?(a.choice_same_category||0):'—'}`]]){const m=node('div');m.append(node('strong',String(value)),node('span',label),node('small',note,'report-secondary'));metrics.append(m);}h2.append(metrics,reportNote('Видимость блоков не измеряется. Последующий выбор связан по порядку событий, без утверждения о причине.'),disclosure('Ограничения и зависимости','Рядом с товаром нет отдельного блока практических данных. Внешние ссылки на источники отключены. В статических GPU-обзорах отдельные действия с результатами и условиями недоступны.'));
- const h3=reportSection('H3 · Материалы Клуба','СВЯЗАННЫЙ ПУТЬ'),b=r?.H3||{},total=b.evaluated||0;
+ const h3=reportSection('3 · Материалы Клуба','СВЯЗАННЫЙ ПУТЬ'),b=r?.H3||{},total=b.evaluated||0;
  h3.append(reportNote(total?`Выдача измерялась в ${total} попытках. На каждом шаге считаются попытки хотя бы с одним наблюдением.`:'Нет измеренных данных о выдаче материалов. Старые записи не заменяются нулями.'));
  const list=node('ol',null,'report-research-funnel');let previous=total;
  for(const [key,label]of [['offered','Предложены материалы'],['opened','Клик по статье'],['arrived','Переход в статью подтверждён'],['returned','Возврат в сборку подтверждён'],['choice_after_return','Выбор после возврата']]){
@@ -164,7 +164,7 @@ export function hypothesisPanels(r,onSessions){
  }h3.append(list,reportNote('Длина полос — число попыток с измеренной выдачей; подписи — относительно предыдущего шага.'));
  const visibility=node('div',null,'report-observation');visibility.append(node('h3','Видимость карточки · отдельно'),node('p',b.offered?`${b.visible||0} из ${b.offered} попыток с предложенными материалами`:'Нет измеренных предложений'),reportNote('Не менее 50% карточки непрерывно 500 мс при видимой вкладке. Не доказательство внимания и не обязательное условие клика.'));h3.append(visibility);
  h3.append(disclosure('Повторы предложений','Перерисовка, повторное открытие и обновление с тем же набором сохраняют предложение. Изменение контекста A → B → A записывается отдельно; число попыток не увеличивается.'));
- if(total){const states=node('details',null,'report-accordion');states.append(node('summary','Разные состояния пути'),reportTable(['Состояние','Попыток'],[['Рекомендаций не было',b.no_recommendations||0],['Открытие не зарегистрировано',b.no_opening||0],['Клик без перехода',b.opening_without_arrival||0],['Возврат не зарегистрирован',b.arrival_without_return||0],['После возврата нет выбора',b.return_without_choice||0]],'Состояния H3'));h3.append(states);}
+ if(total){const states=node('details',null,'report-accordion');states.append(node('summary','Разные состояния пути'),reportTable(['Состояние','Попыток'],[['Рекомендаций не было',b.no_recommendations||0],['Открытие не зарегистрировано',b.no_opening||0],['Клик без перехода',b.opening_without_arrival||0],['Возврат не зарегистрирован',b.arrival_without_return||0],['После возврата нет выбора',b.return_without_choice||0]],'Состояния гипотезы 3'));h3.append(states);}
  if(onSessions)for(const [p,id]of [[h2,'H2'],[h3,'H3']]){const controls=node('div',null,'product-buttons'),button=node('button','Разобрать → сессии');button.type='button';button.onclick=()=>onSessions(id);controls.append(button);p.append(controls);}
  root.append(h1,h2,h3);return root;
 }
@@ -175,7 +175,7 @@ export function researchCells(f){
  return {coverage:coverageLabels[f.coverage]||'Не измерялось',H2:f.H2.action?`Действий с блоками: ${f.H2.actions.length}`:available?'Действие не зарегистрировано':unsegmented?'Отдельные блоки недоступны':f.H2.availability.length?'Практических блоков нет':'Не измерялось',H3:h3Labels[f.H3.status]||'Не измерялось'};
 }
 export function attemptResearch(f,{title=id=>id,product=id=>id,category=id=>id,time=at=>String(at),measure=ms=>String(ms)+' мс',summaryOnly=false,detailsOnly=false}={}){
- const root=node('section',null,detailsOnly?'report-attempt-evidence':'report-attempt-research');root.dataset.dsComponent='study.attemptResearch';if(!detailsOnly)root.append(node('h3','H1–H3 в этой попытке'));
+ const root=node('section',null,detailsOnly?'report-attempt-evidence':'report-attempt-research');root.dataset.dsComponent='study.attemptResearch';if(!detailsOnly)root.append(node('h3','1–3 в этой попытке'));
  if(f?.qa&&!detailsOnly)root.append(reportNote('QA-проверка: техническая история сохранена, из исследовательских расчётов исключена.'));
  const status=researchCells(f),summary=node('div',null,'report-observation');let h2=status.H2,h3=status.H3;
  if(f?.H2?.action){
@@ -184,7 +184,7 @@ export function attemptResearch(f,{title=id=>id,product=id=>id,category=id=>id,t
   const next=actions.map(a=>a.next_choice).filter(Boolean).sort((a,b)=>a.at-b.at)[0];h2=`Действий с блоками: ${actions.length} · ${kinds}: ${used}${next?`; далее ${next.action==='replace'?'заменена':'добавлена'} деталь (${category(next.category_id)})`:''}`;
  }
  if(f?.H3?.status==='choice_after_return')h3='Предложение → клик → подтверждённый переход → возврат → выбор';
- summary.append(node('p','H1 · Функция сравнения недоступна'),node('p','H2 · '+h2),node('p','H3 · '+h3));if(!detailsOnly)root.append(summary);
+ summary.append(node('p','1 · Функция сравнения недоступна'),node('p','2 · '+h2),node('p','3 · '+h3));if(!detailsOnly)root.append(summary);
  if(!f||f.coverage==='not_measured'){if(!detailsOnly)root.append(reportNote('Новые измерения отсутствуют. Старые записи не переписываются и не считаются неуспехом.'));return root;}
  if(!detailsOnly)root.append(reportNote(`Измерение: ${status.coverage}${f.incomplete?' · есть известный разрыв':''}. Выбор связан по порядку событий; причина неизвестна.`));if(summaryOnly)return root;
  const rows=[];
@@ -201,7 +201,7 @@ export function attemptResearch(f,{title=id=>id,product=id=>id,category=id=>id,t
   for(const visit of o.visits){rows.push([visit.at,'Переход в статью подтверждён',title(visit.article_id)]);if(visit.return)rows.push([visit.return.at,'Возврат подтверждён',`${title(visit.article_id)} → конфигуратор`]);pushChoice(visit.next_choice);}
  }
  root.append(contexts);rows.sort((a,b)=>a[0]-b[0]);
- const path=node('details',null,'report-accordion report-research-events');path.open=true;path.append(node('summary','Путь H2–H3 · зарегистрированные события'),reportTable(['От старта','Событие','Где / что'],rows.map(([at,event,context])=>[time(at),event,context]),'Путь H2–H3'));root.append(path);
+ const path=node('details',null,'report-accordion report-research-events');path.open=true;path.append(node('summary','Путь H2–3 · зарегистрированные события'),reportTable(['От старта','Событие','Где / что'],rows.map(([at,event,context])=>[time(at),event,context]),'Путь 2–3'));root.append(path);
  if(!detailsOnly)root.append(attemptArticleTimes(f,{title,measure}));
  return root;
 }
