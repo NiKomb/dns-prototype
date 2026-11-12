@@ -226,6 +226,7 @@ body.modal-open{overflow:hidden}
 .store-select:hover{border-color:var(--stroke-border-hover);background:var(--controls-hover-gray)}
 .availability{padding-bottom:10px}
 .availability label,.filter-line{font: var(--type-body);height:39px;padding:0 15px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.filter-panel label:not(.filter-option-with-hint)>.filter-option-caption{position:relative;top:1.5px}
 .availability label,.filter-line,.price-filter label,.brand-filter label,.socket-filter label{cursor:pointer}
 .filter-panel .filter-line:hover{background:var(--background-warning-light)}
 :is(.filter-panel input[type=checkbox],.catalog-compare-input){appearance:none;width:16px;height:16px;flex:0 0 16px;margin:0;border:1px solid var(--stroke-border);border-radius:4px;background:var(--controls-default-white)}

@@ -936,7 +936,7 @@ const catalogUI = (() => {
       else if (kind === 'price-track') {} // Interactive handles are supplied below for every consumer.
       else if (kind === 'filter-option') {
         element.append(input(content.input));
-        const text = content.wrapped || content.hint ? node('span','',content.text) : label();
+        const text = node('span','filter-option-caption',content.text);
         element.append(text);
         if (content.hint) {
           element.classList.add('filter-option-with-hint'); text.classList.add('filter-option-text');

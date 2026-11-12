@@ -243,7 +243,7 @@ function processorMatches(item, skipFacet = '') {
 
 function setOption(label, name, count) {
   const input = label.querySelector('input');
-  const labelText = [...label.childNodes].find((node) => node.nodeType === Node.TEXT_NODE);
+  const labelText = label.querySelector('.filter-option-caption');
   if (label.classList.contains('filter-option-with-hint')) catalogUI.setFilterLabel(label, `${name} (${count})`);
   else labelText.textContent = `${name} (${count})`;
   input.disabled = count === 0 && !input.checked;
