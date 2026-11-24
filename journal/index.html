@@ -1,11 +1,14 @@
 <!doctype html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
   <script src="../shared/prototype-preview.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <meta name="color-scheme" content="light dark">
+  <style>
+    :root[data-theme="dark"] { color-scheme: dark; }
+    :root[data-theme="light"] { color-scheme: light; }
+  </style>
   <title>Журнал тестирования · DNS</title>
   <link rel="icon" href="../assets/shared/favicon.svg" type="image/svg+xml">
   <script src="../shared/journal/loading.js" data-journal-bootstrap></script>
@@ -22,7 +25,7 @@
     <nav id="navigation" aria-label="Разделы журнала"></nav>
   </aside>
   <main>
-    <header class="topbar"><div id="breadcrumb" hidden></div><div class="page-heading"><div><div class="page-title-row"><h1 id="page-title">Обзор</h1><div id="title-actions"></div></div><p id="page-description" class="muted" hidden></p></div><div id="page-actions" class="toolbar"><button class="button icon-button" id="theme-toggle" aria-label="Включить тёмную тему" type="button"></button></div></div></header>
+    <header class="topbar"><div id="breadcrumb" hidden></div><div class="page-heading"><div><div class="page-title-row"><h1 id="page-title">Обзор</h1><div id="title-actions"></div></div><p id="page-description" class="muted" hidden></p></div><div id="page-actions" class="toolbar"><button class="button icon-button" id="theme-toggle" aria-label="Включить светлую тему" type="button"></button></div></div></header>
     <section class="page-content" aria-label="Экран журнала">
     <p id="status" class="muted" role="status" aria-live="polite"></p><div id="screen"></div></section>
   </main>

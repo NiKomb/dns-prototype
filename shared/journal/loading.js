@@ -4,7 +4,6 @@
  if(window.journalLoading)return;
  const node=(tag,text,className)=>{const e=document.createElement(tag);if(text!=null)e.textContent=text;if(className)e.className=className;return e;};
  const readSavedTheme=(key='dns-report-theme')=>{try{const value=localStorage.getItem(key);return ['light','dark'].includes(value)?value:null;}catch{return null;}};
- const preferredTheme=()=>readSavedTheme()||'light';
 function create(label='Загружаем тестовые данные…',section='overview'){
  if(section==='overview'){
   const root=node('div',null,'approved-content journal-overview-loading');root.setAttribute('role','status');root.setAttribute('aria-label',label);
@@ -26,5 +25,8 @@ function create(label='Загружаем тестовые данные…',sect
   document.getElementById('screen').replaceChildren(create('Обновление данных…',section));
  }
  window.journalLoading={create,bootstrap,readSavedTheme};
- if(document.currentScript?.hasAttribute('data-journal-bootstrap'))document.documentElement.dataset.theme=preferredTheme();
+ if(document.currentScript?.hasAttribute('data-journal-bootstrap')){
+  const saved=readSavedTheme();
+  if(saved)document.documentElement.dataset.theme=saved;
+ }
 })();

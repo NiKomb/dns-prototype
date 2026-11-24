@@ -2,7 +2,7 @@ import './loading.js';
 import {icon} from './components.js';
 
 const themes=new WeakMap();
-// Keep the saved manual choice; otherwise start in the light theme.
+// The page supplies the initial theme when there is no saved manual choice.
 export function initializeJournalTheme(root,control,key='journal-demo-theme'){
  let state=themes.get(root);
  if(!state){
@@ -18,7 +18,7 @@ export function initializeJournalTheme(root,control,key='journal-demo-theme'){
    }
   }};
   themes.set(root,state);
-  state.apply(saved||'light');
+  state.apply(saved||root.dataset.theme||'light');
  }
  if(control&&state.control!==control){
   state.control=control;
